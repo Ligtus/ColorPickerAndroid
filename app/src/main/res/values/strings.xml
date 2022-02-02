@@ -6,4 +6,5 @@
     <string name="brilloDefault">100</string>
     <string name="confirm">Cambiar</string>
     <string name="dialogText">Modificar color</string>
+    <string name="cargando">Cargando...</string>
 </resources>
