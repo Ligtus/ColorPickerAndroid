@@ -1,0 +1,311 @@
+package com.example.familylamp;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Dialog;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class MainActivity extends AppCompatActivity {
+
+    ImageView iv;
+    View colorview;
+    TextView values;
+    TextView brilloValue;
+    Bitmap bitmap;
+    SeekBar brillo;
+    int r=0, g=0, b=0;
+    int px = 0;
+    String hex = "#000000";
+    ArrayList<Button> botones = new ArrayList<Button>();
+    ArrayList<String> recientes = new ArrayList<String>();
+    String[] lamparas = new String[]{"lampara1", "lampara2", "lampara3"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+
+        int index = sharedPreferences.getInt("index", 0);
+
+        if (index != 0) {
+            for (int i=0; i < index; i++) {
+                recientes.add(sharedPreferences.getString("color" + i, "#000000"));
+            }
+        }
+
+        for (int i = 1; i <= 12; i++) {
+            int id = getResources().getIdentifier("button_" + i, "id", getPackageName());
+            botones.add((Button) findViewById(id));
+            int iterator = i - 1;
+            findViewById(id).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recientes.size() > iterator) {
+                        chooseFromHex(recientes.get(iterator));
+                    }
+                }
+            });
+        }
+
+        cargarRecientes();
+
+        iv = findViewById(R.id.color);
+        colorview = findViewById(R.id.muestra);
+        values = findViewById(R.id.values);
+        iv.setDrawingCacheEnabled(true);
+        iv.buildDrawingCache(true);
+        brillo = findViewById(R.id.brillo);
+        brilloValue = findViewById(R.id.brilloValue);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, lamparas);
+        spinner.setAdapter(adapter);
+        if (lamparas.length == 1) {
+            spinner.setVisibility(View.INVISIBLE);
+        }
+
+        values.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modRGB();
+            }
+        });
+
+
+        iv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN || motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
+                    bitmap = iv.getDrawingCache();
+                    if ((((int) motionEvent.getY() < iv.getHeight()) && ((int) motionEvent.getY() > 10)) &&
+                            (((int) motionEvent.getX() < iv.getWidth()) && ((int) motionEvent.getX() > 10))) {
+                        px = bitmap.getPixel((int) motionEvent.getX(), (int) motionEvent.getY());
+                    }
+                    chooseColor();
+                }
+                return true;
+            }
+        });
+        brillo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                brilloValue.setText(String.valueOf(progress));
+                if (px != 0) {
+                    chooseColor();
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        if (recientes.size() >= 1) {
+            chooseFromHex(recientes.get(0));
+        }
+    }
+
+    public void chooseColor() {
+        float brilloColor = Float.parseFloat(brilloValue.getText().toString()) / 100;
+        r = (int) (Color.red(px) * brilloColor);
+        g = (int) (Color.green(px) * brilloColor);
+        b = (int) (Color.blue(px) * brilloColor);
+        int color = Color.rgb(r, g, b);
+
+        hex = String.format("#%06X", (0xFFFFFF & color));
+
+        if (!hex.equals("#000000")) {
+            colorview.setBackgroundColor(color);
+        } else {
+            colorview.setBackgroundColor(getResources().getColor(R.color.nulo));
+        }
+
+
+        values.setText("RGB: " + r + ", " + g + ", " + b + " \nHEX: " + hex);
+    }
+
+    public void chooseFromHex(String hexReciente) {
+        hex = hexReciente;
+        int px = Color.parseColor(hex);
+        r = (int) (Color.red(px));
+        g = (int) (Color.green(px));
+        b = (int) (Color.blue(px));
+        int color = Color.rgb(r, g, b);
+
+        colorview.setBackgroundColor(color);
+
+        values.setText("RGB: " + r + ", " + g + ", " + b + " \nHEX: " + hex);
+    }
+
+    public void updateRecientes(View view) {
+        if (!hex.equals("#000000")) {
+            if (recientes.size() == 0) {
+                recientes.add(hex);
+            }
+            if (!recientes.contains(hex)) {
+                recientes.add(0, hex);
+                if (recientes.size() > 12) {
+                    recientes.remove(12);
+                }
+
+            }
+            for (int i = 0; i < recientes.size(); i++) {
+                botones.get(i).setBackgroundColor(Color.parseColor(recientes.get(i)));
+            }
+        }
+    }
+
+    public void chooseColorDialog(View colorDialog, TextView valuesDialog) {
+        int color = Color.rgb(r, g, b);
+
+        hex = String.format("#%06X", (0xFFFFFF & color));
+
+        if (!hex.equals("#000000")) {
+            colorview.setBackgroundColor(color);
+            colorDialog.setBackgroundColor(color);
+        } else {
+            colorview.setBackgroundColor(getResources().getColor(R.color.nulo));
+            colorDialog.setBackgroundColor(getResources().getColor(R.color.nulo));
+        }
+
+        values.setText("RGB: " + r + ", " + g + ", " + b + " \nHEX: " + hex);
+        valuesDialog.setText("RGB: " + r + ", " + g + ", " + b + " \nHEX: " + hex);
+
+    }
+
+    public void modRGB() {
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.rgb_dialog);
+
+        TextView valuesDialog = dialog.findViewById(R.id.valuesDialog);
+        View colorDialog = dialog.findViewById(R.id.colorDialog);
+        SeekBar sbR = dialog.findViewById(R.id.seekBar_0);
+        sbR.setProgress(r);
+        sbR.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                r = progress;
+                chooseColorDialog(colorDialog, valuesDialog);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        SeekBar sbG = dialog.findViewById(R.id.seekBar_1);
+        sbG.setProgress(g);
+        sbG.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                g = progress;
+                chooseColorDialog(colorDialog, valuesDialog);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        SeekBar sbB = dialog.findViewById(R.id.seekBar_2);
+        sbB.setProgress(b);
+        sbB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                b = progress;
+                chooseColorDialog(colorDialog, valuesDialog);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        chooseColorDialog(colorDialog, valuesDialog);
+
+        Button confirm = dialog.findViewById(R.id.confirmDialog);
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    public void cargarRecientes() {
+        for (int i = 0; i < recientes.size(); i++) {
+            botones.get(i).setBackgroundColor(Color.parseColor(recientes.get(i)));
+        }
+    }
+
+    public void guardarRecientes() {
+        SharedPreferences.Editor sharedPreferencesEditor = getPreferences(MODE_PRIVATE).edit();
+        int index = 0;
+        for (String reciente: recientes) {
+            sharedPreferencesEditor.putString("color" + index, reciente);
+            index++;
+        }
+        sharedPreferencesEditor.putInt("index", index);
+        sharedPreferencesEditor.commit();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        guardarRecientes();
+    }
+}

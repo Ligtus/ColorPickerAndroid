@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ColorPicker</string>
+    <string name="colorPanelText">Rueda de colores</string>
+    <string name="recientes"><u>Colores recientes</u></string>
+    <string name="brilloText"><u>Brillo</u></string>
+    <string name="brilloDefault">100</string>
+    <string name="confirm">Cambiar</string>
+    <string name="dialogText">Modificar color</string>
+</resources>
