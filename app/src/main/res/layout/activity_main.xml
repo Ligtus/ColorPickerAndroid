@@ -285,21 +285,4 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/_3sdp"
-        android:layout_marginBottom="@dimen/_3sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/spinner_background">
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="@dimen/_45sdp"
-            android:minHeight="@dimen/_30sdp" />
-    </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

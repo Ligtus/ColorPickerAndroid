@@ -6,23 +6,18 @@ import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     String hex = "#000000";
     ArrayList<Button> botones = new ArrayList<Button>();
     ArrayList<String> recientes = new ArrayList<String>();
-    String[] lamparas = new String[]{"lampara1", "lampara2", "lampara3"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +70,6 @@ public class MainActivity extends AppCompatActivity {
         iv.buildDrawingCache(true);
         brillo = findViewById(R.id.brillo);
         brilloValue = findViewById(R.id.brilloValue);
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, lamparas);
-        spinner.setAdapter(adapter);
-        if (lamparas.length == 1) {
-            spinner.setVisibility(View.INVISIBLE);
-        }
 
         values.setOnClickListener(new View.OnClickListener() {
             @Override
