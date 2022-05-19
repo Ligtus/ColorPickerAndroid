@@ -254,6 +254,7 @@
                 android:id="@+id/brillo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
+                android:min="1"
                 android:progress="100" />
 
             <LinearLayout
@@ -262,15 +263,24 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <View
+                <Button
                     android:id="@+id/muestra"
-                    android:layout_width="@dimen/_75sdp"
-                    android:layout_height="@dimen/_75sdp"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
                     android:layout_marginHorizontal="@dimen/_25sdp"
-                    android:layout_weight="0" />
+                    android:layout_weight="0"
+                    android:backgroundTint="@color/nulo"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/_8ssp"
+                    app:cornerRadius="@dimen/_30sdp"
+                    app:rippleColor="@color/nulo"
+                    app:strokeColor="@color/nulo" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/cambiarBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_marginHorizontal="@dimen/_25sdp"

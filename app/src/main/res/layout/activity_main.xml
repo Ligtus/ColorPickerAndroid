@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+    <!-- OLD VERSION
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -217,7 +222,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -246,43 +251,62 @@
             android:id="@+id/brillo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
+            android:min="1"
             android:progress="100" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <View
+            <Button
                 android:id="@+id/muestra"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_weight="0" />
+                android:layout_weight="0"
+                android:backgroundTint="@color/nulo"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/_11ssp"
+                app:cornerRadius="@dimen/_50sdp"
+                app:rippleColor="@color/nulo"
+                app:strokeColor="@color/nulo" />
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_weight="0"
                 android:onClick="updateRecientes"
                 android:text="@string/confirm" />
+
+            <TextView
+                android:id="@+id/testrgb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/values"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="bottom|left"
-        android:paddingLeft="5dp"
-        android:paddingBottom="3dp"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@color/nulo"
+        android:cropToPadding="false"
+        android:onClick="settings"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/settings"
+        app:tint="@color/material_on_primary_disabled" />
+-->
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

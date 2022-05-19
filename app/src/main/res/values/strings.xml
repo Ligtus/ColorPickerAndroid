@@ -7,4 +7,7 @@
     <string name="confirm">Cambiar</string>
     <string name="dialogText">Modificar color</string>
     <string name="cargando">Cargando...</string>
+    <string name="sendTest">Texto a enviar</string>
+    <string name="ipTest">IP a enviar</string>
+    <string name="settingsTitle"><u>Configuración</u></string>
 </resources>

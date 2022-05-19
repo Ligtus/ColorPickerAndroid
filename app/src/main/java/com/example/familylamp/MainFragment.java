@@ -1,9 +1,6 @@
 package com.example.familylamp;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -11,20 +8,23 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-    /* OLD activity code
+public class MainFragment extends Fragment {
+
     private final int PORT = 11555;
     ImageView iv;
     //View colorView;
@@ -39,11 +39,31 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Button> botones = new ArrayList<Button>();
     ArrayList<String> recientes = new ArrayList<String>();
 
+    public MainFragment() {
+    }
+
+    public static MainFragment newInstance() {
+        MainFragment fragment = new MainFragment();
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_main, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences sharedPreferences = this.getActivity().getPreferences(MODE_PRIVATE);
 
         int index = sharedPreferences.getInt("index", 0);
 
@@ -54,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (int i = 1; i <= 12; i++) {
-            int id = getResources().getIdentifier("button_" + i, "id", getPackageName());
-            botones.add((Button) findViewById(id));
+            int id = getResources().getIdentifier("button_" + i, "id", this.getActivity().getPackageName());
+            botones.add((Button) getView().findViewById(id));
             int iterator = i - 1;
-            findViewById(id).setOnClickListener(new View.OnClickListener() {
+            getView().findViewById(id).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (recientes.size() > iterator) {
@@ -67,18 +87,25 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        getView().findViewById(R.id.cambiarBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateRecientes(getView());
+            }
+        });
+
         cargarRecientes();
 
-        iv = findViewById(R.id.color);
-        values = findViewById(R.id.muestra);
-        values = findViewById(R.id.muestra);
+        iv = getView().findViewById(R.id.color);
+        values = getView().findViewById(R.id.muestra);
+        values = getView().findViewById(R.id.muestra);
         iv.setDrawingCacheEnabled(true);
         iv.buildDrawingCache(true);
-        brillo = findViewById(R.id.brillo);
-        brilloValue = findViewById(R.id.brilloValue);
+        brillo = getView().findViewById(R.id.brillo);
+        brilloValue = getView().findViewById(R.id.brilloValue);
 
         //TODO borrar test
-        TextView test = findViewById(R.id.testrgb);
+        TextView test = getView().findViewById(R.id.testrgb);
 
         values.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
     public void calcBrillo(int r, int g, int b) {
         int higher = getHigher(r, g, b);
         double brilloValue = ((double)higher / (double)(255)) * 100;
-        TextView test = (TextView) findViewById(R.id.testrgb);
+        TextView test = (TextView) getView().findViewById(R.id.testrgb);
         test.setText(Integer.toString((int)brilloValue));
         brillo.setProgress((int)brilloValue);
     }
@@ -237,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void modRGB() {
-        final Dialog dialog = new Dialog(MainActivity.this);
+        final Dialog dialog = new Dialog(this.getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.rgb_dialog);
@@ -329,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void guardarRecientes() {
-        SharedPreferences.Editor sharedPreferencesEditor = getPreferences(MODE_PRIVATE).edit();
+        SharedPreferences.Editor sharedPreferencesEditor = this.getActivity().getPreferences(MODE_PRIVATE).edit();
         int index = 0;
         for (String reciente: recientes) {
             sharedPreferencesEditor.putString("color" + index, reciente);
@@ -381,27 +408,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         guardarRecientes();
-    }
-
-    public void settings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
-    */
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // create fragment main
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, new MainFragment());
-        fragmentTransaction.commit();
-
     }
 }
