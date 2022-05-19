@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainFragment">
 
-    <!-- OLD activity method
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -21,7 +19,7 @@
 
         <ImageView
             android:id="@+id/color"
-            android:layout_width="@dimen/_250sdp"
+            android:layout_width="@dimen/_280sdp"
             android:layout_height="match_parent"
             android:contentDescription="@string/colorPanelText"
             app:srcCompat="@drawable/panelcolor" />
@@ -36,7 +34,7 @@
             <TextView
                 android:id="@+id/recientes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_35sdp"
                 android:gravity="center"
                 android:text="@string/recientes"
                 android:textSize="@dimen/_18ssp" />
@@ -44,16 +42,16 @@
             <LinearLayout
                 android:id="@+id/linearLayout1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="@dimen/_55sdp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/button_1"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -64,9 +62,9 @@
                 <Button
                     android:id="@+id/button_2"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -78,9 +76,9 @@
                 <Button
                     android:id="@+id/button_3"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -92,9 +90,9 @@
                 <Button
                     android:id="@+id/button_4"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -106,9 +104,9 @@
                 <Button
                     android:id="@+id/button_5"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -120,9 +118,9 @@
                 <Button
                     android:id="@+id/button_6"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -136,7 +134,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="@dimen/_55sdp"
                 android:layout_weight="0"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -144,9 +142,9 @@
                 <Button
                     android:id="@+id/button_7"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -158,9 +156,9 @@
                 <Button
                     android:id="@+id/button_8"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -172,9 +170,9 @@
                 <Button
                     android:id="@+id/button_9"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -185,9 +183,9 @@
                 <Button
                     android:id="@+id/button_10"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -199,9 +197,9 @@
                 <Button
                     android:id="@+id/button_11"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -213,9 +211,9 @@
                 <Button
                     android:id="@+id/button_12"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@null"
                     android:insetTop="0dp"
@@ -255,42 +253,39 @@
             <SeekBar
                 android:id="@+id/brillo"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_25sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:min="1"
                 android:progress="100" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/muestra"
+                    android:id="@+id/muestra3"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_60sdp"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_marginHorizontal="@dimen/_25sdp"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@color/nulo"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:textAlignment="center"
-                    android:textSize="@dimen/_8ssp"
-                    app:cornerRadius="@dimen/_30sdp"
+                    android:textSize="@dimen/_11ssp"
+                    app:cornerRadius="@dimen/_50sdp"
                     app:rippleColor="@color/nulo"
                     app:strokeColor="@color/nulo" />
 
                 <Button
                     android:id="@+id/cambiarBtn"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_60sdp"
                     android:layout_marginHorizontal="@dimen/_25sdp"
                     android:layout_weight="0"
-                    android:onClick="updateRecientes"
-                    android:paddingVertical="@dimen/_8sdp"
-                    android:text="@string/confirm"
-                    android:textSize="@dimen/_8ssp" />
+                    android:text="@string/confirm" />
             </LinearLayout>
 
         </LinearLayout>
@@ -307,6 +302,5 @@
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-        -->
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

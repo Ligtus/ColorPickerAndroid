@@ -104,9 +104,6 @@ public class MainFragment extends Fragment {
         brillo = getView().findViewById(R.id.brillo);
         brilloValue = getView().findViewById(R.id.brilloValue);
 
-        //TODO borrar test
-        TextView test = getView().findViewById(R.id.testrgb);
-
         values.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +126,6 @@ public class MainFragment extends Fragment {
                         }
                     }
                     if (px != 0) {
-                        test.setText("px: " + px);
                         chooseColor();
                     }
                 }
@@ -240,8 +236,6 @@ public class MainFragment extends Fragment {
     public void calcBrillo(int r, int g, int b) {
         int higher = getHigher(r, g, b);
         double brilloValue = ((double)higher / (double)(255)) * 100;
-        TextView test = (TextView) getView().findViewById(R.id.testrgb);
-        test.setText(Integer.toString((int)brilloValue));
         brillo.setProgress((int)brilloValue);
     }
 

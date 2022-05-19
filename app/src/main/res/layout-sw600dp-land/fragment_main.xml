@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainFragment">
 
-    <!-- OLD activity method
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -36,7 +34,7 @@
             <TextView
                 android:id="@+id/recientes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_35sdp"
                 android:gravity="center"
                 android:text="@string/recientes"
                 android:textSize="@dimen/_18ssp" />
@@ -261,23 +259,23 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/muestra"
+                    android:id="@+id/muestra2"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_60sdp"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_marginHorizontal="@dimen/_25sdp"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_weight="0"
                     android:backgroundTint="@color/nulo"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:textAlignment="center"
-                    android:textSize="@dimen/_8ssp"
-                    app:cornerRadius="@dimen/_30sdp"
+                    android:textSize="@dimen/_11ssp"
+                    app:cornerRadius="@dimen/_50sdp"
                     app:rippleColor="@color/nulo"
                     app:strokeColor="@color/nulo" />
 
@@ -287,7 +285,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_25sdp"
                     android:layout_weight="0"
-                    android:onClick="updateRecientes"
                     android:paddingVertical="@dimen/_8sdp"
                     android:text="@string/confirm"
                     android:textSize="@dimen/_8ssp" />
@@ -307,6 +304,5 @@
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-        -->
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
