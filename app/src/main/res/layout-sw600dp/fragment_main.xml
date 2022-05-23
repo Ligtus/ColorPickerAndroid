@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_230sdp"
             android:contentDescription="@string/colorPanelText"
+            android:paddingTop="15dp"
             app:srcCompat="@drawable/panelcolor" />
 
         <TextView
@@ -267,18 +268,20 @@
                 android:insetBottom="0dp"
                 android:textAlignment="center"
                 android:textSize="@dimen/_8ssp"
-                app:cornerRadius="@dimen/_30sdp"
+                app:cornerRadius="@dimen/_35sdp"
                 app:rippleColor="@color/nulo"
                 app:strokeColor="@color/nulo" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/cambiarBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_weight="0"
-                android:text="@string/confirm"
-                android:textSize="@dimen/_10ssp" />
+                android:background="@drawable/btn_background"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/send_24dp" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -293,5 +296,29 @@
         android:textSize="@dimen/_8ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/btnExplosion"
+        android:layout_width="@dimen/_64sdp"
+        android:layout_height="@dimen/_64sdp"
+        android:background="@drawable/btn_explosion_back"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/buttonSettings"
+        app:layout_constraintEnd_toEndOf="@id/buttonSettings"
+        app:layout_constraintStart_toStartOf="@+id/buttonSettings"
+        app:layout_constraintTop_toTopOf="@+id/buttonSettings" />
+
+    <ImageButton
+        android:id="@+id/buttonSettings"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:adjustViewBounds="true"
+        android:backgroundTint="@color/nulo"
+        android:cropToPadding="false"
+        android:onClick="settings"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/settings_36dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

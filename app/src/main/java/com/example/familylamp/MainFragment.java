@@ -7,19 +7,31 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Animatable2;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -68,36 +80,24 @@ public class MainFragment extends Fragment {
         int index = sharedPreferences.getInt("index", 0);
 
         if (index != 0) {
+            recientes.clear();
             for (int i=0; i < index; i++) {
                 recientes.add(sharedPreferences.getString("color" + i, "#000000"));
             }
         }
 
-        for (int i = 1; i <= 12; i++) {
-            int id = getResources().getIdentifier("button_" + i, "id", this.getActivity().getPackageName());
-            botones.add((Button) getView().findViewById(id));
-            int iterator = i - 1;
-            getView().findViewById(id).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (recientes.size() > iterator) {
-                        chooseFromHex(recientes.get(iterator));
-                    }
-                }
-            });
-        }
+        ImageButton cambiarBtn = getView().findViewById(R.id.cambiarBtn);
+        Drawable imgCambiar = cambiarBtn.getDrawable();
+        AnimatedVectorDrawable animCambiar = (AnimatedVectorDrawable) imgCambiar;
 
-        getView().findViewById(R.id.cambiarBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateRecientes(getView());
-            }
+        cambiarBtn.setOnClickListener(view1 -> {
+            updateRecientes(getView());
+            animCambiar.start();
         });
 
         cargarRecientes();
 
         iv = getView().findViewById(R.id.color);
-        values = getView().findViewById(R.id.muestra);
         values = getView().findViewById(R.id.muestra);
         iv.setDrawingCacheEnabled(true);
         iv.buildDrawingCache(true);
@@ -111,6 +111,41 @@ public class MainFragment extends Fragment {
             }
         });
 
+        ImageButton btnSettings = getView().findViewById(R.id.buttonSettings);
+        View explosion = getView().findViewById(R.id.btnExplosion);
+
+        Drawable imgSettings = btnSettings.getDrawable();
+        AnimatedVectorDrawable animSettings = (AnimatedVectorDrawable) imgSettings;
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.btn_explosion_anim);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                settings();
+                explosion.setVisibility(View.INVISIBLE);
+                btnSettings.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                explosion.setVisibility(View.VISIBLE);
+                explosion.startAnimation(animation);
+                animSettings.start();
+                //settings();
+            }
+        });
+
+        TextView testrgb = getView().findViewById(R.id.testrgb);
 
         iv.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -124,6 +159,9 @@ public class MainFragment extends Fragment {
                         if (getRGB(pxTmp) != rgb) {
                             px = pxTmp;
                         }
+                        int[] rgbTmp = getRGB(px);
+                        testrgb.setText("x: " + (int) motionEvent.getX() + " y: " + (int) motionEvent.getY() + " rgb: " );
+
                     }
                     if (px != 0) {
                         chooseColor();
@@ -132,6 +170,7 @@ public class MainFragment extends Fragment {
                 return true;
             }
         });
+
         brillo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
@@ -344,6 +383,21 @@ public class MainFragment extends Fragment {
     }
 
     public void cargarRecientes() {
+        for (int i = 1; i <= 12; i++) {
+            int id = getResources().getIdentifier("button_" + i, "id", this.getActivity().getPackageName());
+            botones.add((Button) getView().findViewById(id));
+            // log botones length
+            Log.d("botones", String.valueOf(botones.size()));
+            int iterator = i - 1;
+            getView().findViewById(id).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recientes.size() > iterator) {
+                        chooseFromHex(recientes.get(iterator));
+                    }
+                }
+            });
+        }
         for (int i = 0; i < recientes.size(); i++) {
             botones.get(i).setBackgroundColor(Color.parseColor(recientes.get(i)));
         }
@@ -405,5 +459,16 @@ public class MainFragment extends Fragment {
     public void onStop() {
         super.onStop();
         guardarRecientes();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        botones.clear();
+        cargarRecientes();
+    }
+
+    public void settings() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_nav_settings);
     }
 }
