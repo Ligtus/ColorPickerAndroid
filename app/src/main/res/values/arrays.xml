@@ -1,12 +1,40 @@
 <resources>
     <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
+    <string-array name="nRecientes">
+        <item>6 colores</item>
+        <item>12 colores</item>
+        <item>18 colores</item>
+        <item>24 colores</item>
+        <item>30 colores</item>
+        <item>36 colores</item>
+        <item>42 colores</item>
+        <item>48 colores</item>
+        <item>54 colores</item>
+        <item>60 colores</item>
+        <item>66 colores</item>
+        <item>72 colores</item>
+        <item>78 colores</item>
+        <item>84 colores</item>
+        <item>90 colores</item>
+        <item>96 colores</item>
     </string-array>
 
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
+    <string-array name="nRecientes_values">
+        <item>6</item>
+        <item>12</item>
+        <item>18</item>
+        <item>24</item>
+        <item>30</item>
+        <item>36</item>
+        <item>42</item>
+        <item>48</item>
+        <item>54</item>
+        <item>60</item>
+        <item>66</item>
+        <item>72</item>
+        <item>78</item>
+        <item>84</item>
+        <item>90</item>
+        <item>96</item>
     </string-array>
 </resources>

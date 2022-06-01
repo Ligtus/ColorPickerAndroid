@@ -2,24 +2,24 @@ package com.example.familylamp;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Intent;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
+import androidx.preference.PreferenceManager;
 
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -32,11 +32,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,7 +49,7 @@ public class MainFragment extends Fragment {
     int px = 0;
 
     // Muestra and color variables and button
-    Button values;
+    Button muestra;
     int r=0, g=0, b=0;
     int rBrillo=0, gBrillo=0, bBrillo=0;
     String hex = "#000000";
@@ -64,6 +62,12 @@ public class MainFragment extends Fragment {
     // Saved color variables and buttons
     ArrayList<Button> botones = new ArrayList<Button>();
     ArrayList<String> recientes = new ArrayList<String>();
+
+    // Settings variables
+    SharedPreferences prefs;
+    boolean vibration;
+    int vibrationTime;
+
 
     public MainFragment() {
     }
@@ -90,28 +94,32 @@ public class MainFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Load saved colors
-        SharedPreferences sharedPreferences = this.getActivity().getPreferences(MODE_PRIVATE);
+        // Load application preferences
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        // Load vibration preferences
+        vibration = prefs.getBoolean("vibration", true);
+        vibrationTime = prefs.getInt("vibrationTime", 15);
 
         // Load number of recientes, if it doesn't exist, set it to 12
-        int nRecientes  = sharedPreferences.getInt("nRecientes", 12);
+        int nRecientes  = Integer.parseInt(prefs.getString("nRecientes", "12"));
 
         // Get number of recientes rows, there are 6 colors per row
         int nFilas = (int)Math.ceil(nRecientes/6);
 
         // Load index of saved colors if it exists, else set it to 0
-        int index = sharedPreferences.getInt("index", 0);
+        int index = prefs.getInt("index", 0);
 
         // If there are saved colors, load them
         if (index != 0) {
             recientes.clear();
             for (int i=0; i < index; i++) {
-                recientes.add(sharedPreferences.getString("color" + i, "#000000"));
+                recientes.add(prefs.getString("color" + i, "#000000"));
             }
         }
 
         // Show saved colors
-        cargarRecientes(nRecientes, nFilas);
+        cargarRecientes();
 
         // Set app main background color, this is used to reset the color in case settings has been opened
         getActivity().findViewById(R.id.nav_host_fragment).setBackgroundColor(getResources().getColor(R.color.appBackground));
@@ -127,15 +135,14 @@ public class MainFragment extends Fragment {
             animCambiar.start();
         });
 
-
         iv = getView().findViewById(R.id.color);
-        values = getView().findViewById(R.id.muestra);
+        muestra = getView().findViewById(R.id.muestra);
         iv.setDrawingCacheEnabled(true);
         iv.buildDrawingCache(true);
         brillo = getView().findViewById(R.id.brillo);
         brilloValue = getView().findViewById(R.id.brilloValue);
 
-        values.setOnClickListener(new View.OnClickListener() {
+        muestra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 modRGB();
@@ -158,7 +165,7 @@ public class MainFragment extends Fragment {
                 settings();
                 explosion.setVisibility(View.INVISIBLE);
                 btnSettings.setVisibility(View.INVISIBLE);
-                getActivity().findViewById(R.id.nav_host_fragment).setBackgroundColor(getResources().getColor(R.color.explosionBackground));
+                getActivity().findViewById(R.id.nav_host_fragment).setBackgroundColor(getResources().getColor(R.color.settingsBackground));
 
             }
 
@@ -185,7 +192,7 @@ public class MainFragment extends Fragment {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     int x = (int) motionEvent.getX();
                     int y = (int) motionEvent.getY();
-                    if (y < view.getHeight() && x < view.getWidth()) {
+                    if ((y < view.getHeight()) && (x < view.getWidth()) && (x > 0) && (y > 0)) {
                         bitmap = iv.getDrawingCache();
                         //log result of bitmap.getcolor
                         int pixel = bitmap.getPixel(x, y);
@@ -206,7 +213,7 @@ public class MainFragment extends Fragment {
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
                     int x = (int) motionEvent.getX();
                     int y = (int) motionEvent.getY();
-                    if (y < view.getHeight() && x < view.getWidth()) {
+                    if ((y < view.getHeight()) && (x < view.getWidth()) && (x > 0) && (y > 0)) {
                         bitmap = iv.getDrawingCache();
                         //log result of bitmap.getcolor
                         int pixel = bitmap.getPixel(x, y);
@@ -334,9 +341,7 @@ public class MainFragment extends Fragment {
                 }
 
             }
-            for (int i = 0; i < recientes.size(); i++) {
-                botones.get(i).setBackgroundColor(Color.parseColor(recientes.get(i)));
-            }
+            cargarRecientes();
             float brilloTmp = Float.parseFloat(brilloValue.getText().toString())/100;
             BroadCastThread bct = new BroadCastThread((int)(r*brilloTmp) + "," + (int)(g*brilloTmp) + "," + (int)(b*brilloTmp), PORT);
             bct.start();
@@ -475,61 +480,79 @@ public class MainFragment extends Fragment {
 
     }
 
-    public void cargarRecientes(int nRecientes, int nFilas) {
+    public void confirmDialog(int iterator) {
+        new AlertDialog.Builder(this.getActivity(), R.style.AlertDialogCustom)
+                .setTitle(R.string.delete_color_title)
+                .setMessage(R.string.delete_color_message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        recientes.remove(iterator);
+                        // show recientes on log
+                        Log.d("Recientes", "array: " + recientes.toString());
+                        cargarRecientes();
+                        Toast.makeText(getContext(), R.string.color_deleted, Toast.LENGTH_SHORT).show();
+                    }})
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }}).show();
+    }
 
-        LinearLayout scrollLinear = getActivity().findViewById(R.id.scrollLinear);
-        for (int i = 0; i < nFilas; i++) {
-            LinearLayout linearLayout = new LinearLayout(getActivity());
-            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-            for (int j = 0; j < nRecientes/nFilas; j++) {
-                final int index = i * (nRecientes/nFilas) + j;
-                if (index < recientes.size()) {
-                    Button btn = new Button(getActivity());
-                    btn.setBackgroundColor(Color.parseColor(recientes.get(index)));
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            chooseFromHex(recientes.get(index));
-                            calcBrillo(r, g, b);
-                        }
-                    });
-                    btn.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View view) {
-                            recientes.remove(index);
-                            cargarRecientes(nRecientes, nFilas);
-                            return true;
-                        }
-                    });
-                    linearLayout.addView(btn);
-                }
-            }
-            scrollLinear.addView(linearLayout);
-        }
+    public void cargarRecientes() {
 
-        // For each button, set it's background color to the color of the reciente
-        // TODO - make this use amount of recientes setting
-        for (int i = 1; i <= nRecientes; i++) {
-            int id = getResources().getIdentifier("button_" + i, "id", this.getActivity().getPackageName());
-            botones.add((Button) getView().findViewById(id));
-            int iterator = i - 1;
-            getView().findViewById(id).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (recientes.size() > iterator) {
-                        chooseFromHex(recientes.get(iterator));
-                        calcBrillo(r, g, b);
+        // Get all buttons from layout only once
+        if (botones.size() < 12) {
+            for (int i = 0; i < 2; i++) {
+                LinearLayout ll = getView().findViewById(getResources().getIdentifier("linearLayout" + (i + 1), "id", getActivity().getPackageName()));
+                for (int j = 0; j < ll.getChildCount(); j++) {
+                    if (ll.getChildAt(j) instanceof Button) {
+                        botones.add((Button) ll.getChildAt(j));
                     }
                 }
-            });
+            }
         }
-        for (int i = 0; i < recientes.size(); i++) {
-            botones.get(i).setBackgroundColor(Color.parseColor(recientes.get(i)));
+
+        /*
+            For each button, set it's background color to the color of the reciente
+            and add onclick and onlongclick listeners
+         */
+        for (int i = 0; i < botones.size(); i++) {
+            Button btn = botones.get(i);
+            // log recientes size
+            Log.d("Recientes", "size: " + recientes.size());
+            if (i < recientes.size()) {
+                btn.setBackgroundColor(Color.parseColor(recientes.get(i)));
+                int iterator = i;
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (recientes.size() > iterator) {
+                            chooseFromHex(recientes.get(iterator));
+                            calcBrillo(r, g, b);
+                        }
+                    }
+                });
+                btn.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        if (recientes.size() > iterator) {
+                            confirmDialog(iterator);
+                            if (vibration) {
+                                Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+                                vibrator.vibrate(vibrationTime);
+                            }
+                        }
+                        return true;
+                    }
+                });
+            } else {
+                btn.setBackgroundColor(getResources().getColor(R.color.nulo));
+            }
         }
     }
 
     public void guardarRecientes() {
-        SharedPreferences.Editor sharedPreferencesEditor = this.getActivity().getPreferences(MODE_PRIVATE).edit();
+        SharedPreferences.Editor sharedPreferencesEditor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
         int index = 0;
         for (String reciente: recientes) {
             sharedPreferencesEditor.putString("color" + index, reciente);
@@ -540,13 +563,13 @@ public class MainFragment extends Fragment {
     }
 
     private void clearMuestraColor() {
-        values.setText("");
-        values.setBackgroundColor(getResources().getColor(R.color.nulo));
+        muestra.setText("");
+        muestra.setBackgroundColor(getResources().getColor(R.color.nulo));
     }
 
     private void setMuestraColor() {
-        values.setText("RGB\n" + r + ", " + g + ", " + b + "\nHEX\n" + hex);
-        values.setBackgroundColor(Color.rgb(rBrillo, gBrillo, bBrillo));
+        muestra.setText("RGB\n" + r + ", " + g + ", " + b + "\nHEX\n" + hex);
+        muestra.setBackgroundColor(Color.rgb(rBrillo, gBrillo, bBrillo));
         chooseTextColor();
     }
 
@@ -615,7 +638,7 @@ public class MainFragment extends Fragment {
         tmpR = calcValue(r, brillo);
         tmpG = calcValue(g, brillo);
         tmpB = calcValue(b, brillo);
-        values.setTextColor(Color.rgb((int)tmpR, (int)tmpG, (int)tmpB));
+        muestra.setTextColor(Color.rgb((int)tmpR, (int)tmpG, (int)tmpB));
     }
 
     @Override
@@ -628,10 +651,7 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
         botones.clear();
-        SharedPreferences sharedPreferences = this.getActivity().getPreferences(MODE_PRIVATE);
-        int nRecientes = sharedPreferences.getInt("nRecientes", 12);
-        int nFilas = nRecientes/6;
-        cargarRecientes(nRecientes, nFilas);
+        cargarRecientes();
     }
 
     public void settings() {

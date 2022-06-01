@@ -34,203 +34,189 @@
             android:text="@string/recientes"
             android:textSize="@dimen/_18ssp" />
 
-        <ScrollView
-            android:id="@+id/scrollRecientes"
+        <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_140sdp">
+            android:layout_height="@dimen/_70sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/scrollLinear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <Button
+                android:id="@+id/button_1"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_70sdp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+            <Button
+                android:id="@+id/button_2"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-                    <Button
-                        android:id="@+id/button_1"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            <Button
+                android:id="@+id/button_3"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-                    <Button
-                        android:id="@+id/button_2"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            <Button
+                android:id="@+id/button_4"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-                    <Button
-                        android:id="@+id/button_3"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            <Button
+                android:id="@+id/button_5"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-                    <Button
-                        android:id="@+id/button_4"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            <Button
+                android:id="@+id/button_6"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-                    <Button
-                        android:id="@+id/button_5"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        </LinearLayout>
 
-                    <Button
-                        android:id="@+id/button_6"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-                </LinearLayout>
+            <Button
+                android:id="@+id/button_7"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_weight="0"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+            <Button
+                android:id="@+id/button_8"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-                    <Button
-                        android:id="@+id/button_7"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            <Button
+                android:id="@+id/button_9"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-                    <Button
-                        android:id="@+id/button_8"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            <Button
+                android:id="@+id/button_10"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-                    <Button
-                        android:id="@+id/button_9"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            <Button
+                android:id="@+id/button_11"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-                    <Button
-                        android:id="@+id/button_10"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                    <Button
-                        android:id="@+id/button_11"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                    <Button
-                        android:id="@+id/button_12"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@null"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="@android:color/darker_gray"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </ScrollView>
+            <Button
+                android:id="@+id/button_12"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@null"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:rippleColor="@null"
+                app:strokeColor="@android:color/darker_gray"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

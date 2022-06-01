@@ -24,4 +24,16 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <string name="color_deleted">Color borrado</string>
+    <string name="delete_color_title">Borrar color</string>
+    <string name="delete_color_message">¿Borrar este color?</string>
+    <string name="confirm_delete">Borrar</string>
+    <string name="cancel_delete">Cancelar</string>
+
+    <!-- SETTINGS -->
+    <string name="recientes_settings_title">Número de colores recientes</string>
+    <string name="colores_settings_header">Colores</string>
+    <string name="vibration_settings_title">Vibración al pulsar color</string>
+    <string name="vibrationTime_settings_title">Intensidad de vibración (ms)</string>
 </resources>

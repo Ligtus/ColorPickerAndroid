@@ -1,20 +1,29 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
-
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory app:title="@string/colores_settings_header">
 
         <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
+            android:defaultValue="12"
+            android:entries="@array/nRecientes"
+            android:entryValues="@array/nRecientes_values"
+            android:key="nRecientes"
+            android:title="@string/recientes_settings_title" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="vibration"
+            android:title="@string/vibration_settings_title" />
+
+        <SeekBarPreference
+
+            android:defaultValue="15"
+            android:key="vibrationTime"
+            android:max="300"
+            android:title="@string/vibrationTime_settings_title"
+            app:min="5"
+            app:seekBarIncrement="5"
+            app:showSeekBarValue="true" />
 
     </PreferenceCategory>
 
