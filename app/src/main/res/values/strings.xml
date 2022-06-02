@@ -34,6 +34,15 @@
     <!-- SETTINGS -->
     <string name="recientes_settings_title">Número de colores recientes</string>
     <string name="colores_settings_header">Colores</string>
+    <string name="lampara_settings_header">Lámpara</string>
+    <string name="auto_send_settings">Enviar color automáticamente</string>
     <string name="vibration_settings_title">Vibración al pulsar color</string>
     <string name="vibrationTime_settings_title">Intensidad de vibración (ms)</string>
+    <string name="color_codes_settings">Mostrar códigos de color</string>
+    <string name="overwrite_settings">Sobreescribir colores si no hay espacios libres</string>
+
+    <!-- POPUP -->
+    <string name="send_color">Enviar</string>
+    <string name="set_color">Ver</string>
+    <string name="delete_color">Borrar</string>
 </resources>

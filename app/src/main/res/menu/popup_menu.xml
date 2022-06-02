@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/popup_send"
+        android:icon="@drawable/send_popup_24dp"
+        android:title="@string/send_color" />
+
+    <item
+        android:id="@+id/popup_set"
+        android:icon="@drawable/eye_24dp"
+        android:title="@string/set_color" />
+
+    <item
+        android:id="@+id/popup_delete"
+        android:icon="@drawable/delete_24dp"
+        android:title="@string/delete_color" />
+</menu>

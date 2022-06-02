@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (px != 0) {
                         test.setText("px: " + px);
-                        chooseColor();
+                        ();
                     }
                 }
                 return true;

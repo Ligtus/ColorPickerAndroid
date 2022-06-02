@@ -20,21 +20,20 @@
     </string-array>
 
     <string-array name="nRecientes_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
         <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
         <item>12</item>
-        <item>18</item>
-        <item>24</item>
-        <item>30</item>
-        <item>36</item>
-        <item>42</item>
-        <item>48</item>
-        <item>54</item>
-        <item>60</item>
-        <item>66</item>
-        <item>72</item>
-        <item>78</item>
-        <item>84</item>
-        <item>90</item>
-        <item>96</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
     </string-array>
 </resources>

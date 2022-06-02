@@ -15,13 +15,17 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +36,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 
@@ -43,21 +50,22 @@ public class MainFragment extends Fragment {
     // Connection variables
     private final int PORT = 11555;
 
-    // Color circle view variables
+    // Color circle view and dialog variables
     ImageView iv;
+    ImageView colorDialogButton;
     Bitmap bitmap;
     int px = 0;
 
-    // Muestra and color variables and button
+    // Muestra and color variables
     Button muestra;
+    int oldR = 0, oldG = 0, oldB = 0;
+    int rBrillo = 0, gBrillo = 0, bBrillo = 0;
     int r=0, g=0, b=0;
-    int rBrillo=0, gBrillo=0, bBrillo=0;
     String hex = "#000000";
 
     // Brillo variables and views
     TextView brilloValue;
     SeekBar brillo;
-    boolean choose = true;
 
     // Saved color variables and buttons
     ArrayList<Button> botones = new ArrayList<Button>();
@@ -65,8 +73,11 @@ public class MainFragment extends Fragment {
 
     // Settings variables
     SharedPreferences prefs;
-    boolean vibration;
+    boolean vibration, showCodes, autoSend, overwrite;
     int vibrationTime;
+
+    // Vibrator variable
+    Vibrator vibrator;
 
 
     public MainFragment() {
@@ -100,6 +111,18 @@ public class MainFragment extends Fragment {
         // Load vibration preferences
         vibration = prefs.getBoolean("vibration", true);
         vibrationTime = prefs.getInt("vibrationTime", 15);
+        if (vibration) {
+            vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        }
+
+        // Load color codes preferences
+        showCodes = prefs.getBoolean("showCodes", false);
+
+        // Load automatic send preferences
+        autoSend = prefs.getBoolean("auto_send", false);
+
+        // Load overwrite preferences
+        overwrite = prefs.getBoolean("overwrite", true);
 
         // Load number of recientes, if it doesn't exist, set it to 12
         int nRecientes  = Integer.parseInt(prefs.getString("nRecientes", "12"));
@@ -126,23 +149,30 @@ public class MainFragment extends Fragment {
 
         // Get "cambiar" button, drawable and animation
         ImageButton cambiarBtn = getView().findViewById(R.id.cambiarBtn);
+        if (autoSend) {
+            cambiarBtn.setImageResource(R.drawable.save_36dp);
+        }
         Drawable imgCambiar = cambiarBtn.getDrawable();
         AnimatedVectorDrawable animCambiar = (AnimatedVectorDrawable) imgCambiar;
+
 
         // Set "cambiar" button onClickListener to change color and start animation
         cambiarBtn.setOnClickListener(view1 -> {
             updateRecientes(getView());
-            animCambiar.start();
+            if (recientes.size() < 12 || overwrite || !autoSend) {
+                animCambiar.start();
+            }
         });
 
         iv = getView().findViewById(R.id.color);
+        colorDialogButton = getView().findViewById(R.id.colorDialogButton);
         muestra = getView().findViewById(R.id.muestra);
         iv.setDrawingCacheEnabled(true);
         iv.buildDrawingCache(true);
         brillo = getView().findViewById(R.id.brillo);
         brilloValue = getView().findViewById(R.id.brilloValue);
 
-        muestra.setOnClickListener(new View.OnClickListener() {
+        colorDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 modRGB();
@@ -184,7 +214,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        TextView testrgb = getView().findViewById(R.id.testrgb);
+//        TextView testrgb = getView().findViewById(R.id.testrgb);
 
         iv.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -196,16 +226,14 @@ public class MainFragment extends Fragment {
                         bitmap = iv.getDrawingCache();
                         //log result of bitmap.getcolor
                         int pixel = bitmap.getPixel(x, y);
-                        int tmpR = Color.red(pixel);
-                        int tmpG = Color.green(pixel);
-                        int tmpB = Color.blue(pixel);
-                        testrgb.setText("cuadrante: " + getQuadrant(x, y) + " startCoords: " + getQuadrantStartPoint(getQuadrant(x, y))[0] + ", " + getQuadrantStartPoint(getQuadrant(x, y))[1]);
+                        r = Color.red(pixel);
+                        g = Color.green(pixel);
+                        b = Color.blue(pixel);
+                        //testrgb.setText("cuadrante: " + getQuadrant(x, y) + " startCoords: " + getQuadrantStartPoint(getQuadrant(x, y))[0] + ", " + getQuadrantStartPoint(getQuadrant(x, y))[1]);
 
-                        chooseColor(tmpR, tmpG, tmpB, true);
+                        //playing = true;
+                        chooseColor(true);
 
-                        r=tmpR;
-                        g=tmpG;
-                        b=tmpB;
                     }
 
 
@@ -217,16 +245,12 @@ public class MainFragment extends Fragment {
                         bitmap = iv.getDrawingCache();
                         //log result of bitmap.getcolor
                         int pixel = bitmap.getPixel(x, y);
-                        int tmpR = Color.red(pixel);
-                        int tmpG = Color.green(pixel);
-                        int tmpB = Color.blue(pixel);
-                        testrgb.setText("cuadrante: " + getQuadrant(x, y) + " startCoords: " + getQuadrantStartPoint(getQuadrant(x, y))[0] + ", " + getQuadrantStartPoint(getQuadrant(x, y))[1]);
+                        r = Color.red(pixel);
+                        g = Color.green(pixel);
+                        b = Color.blue(pixel);
+                        //testrgb.setText("cuadrante: " + getQuadrant(x, y) + " startCoords: " + getQuadrantStartPoint(getQuadrant(x, y))[0] + ", " + getQuadrantStartPoint(getQuadrant(x, y))[1]);
 
-                        chooseColor(tmpR, tmpG, tmpB, true);
-
-                        r = tmpR;
-                        g = tmpG;
-                        b = tmpB;
+                        chooseColor(false);
 
                     }
                     return true;
@@ -243,7 +267,7 @@ public class MainFragment extends Fragment {
                 brilloValue.setText(String.valueOf(progress));
                 if (fromUser) {
                     if (hex != "#000000") {
-                        chooseColor(r,g,b,false);
+                        chooseColor(true);
                     }
                 }
             }
@@ -260,6 +284,8 @@ public class MainFragment extends Fragment {
         if (recientes.size() >= 1) {
             chooseFromHex(recientes.get(0));
         }
+
+
     }
 
     private int getQuadrant(int x, int y) {
@@ -301,9 +327,8 @@ public class MainFragment extends Fragment {
         return startPoint;
     }
 
-    public void chooseColor(int tmpR, int tmpG, int tmpB, boolean save) {
+    public void chooseColor(boolean animate) {
         float brilloColor = Float.parseFloat(brilloValue.getText().toString()) / 100;
-        int oldR = r, oldG = g, oldB = b;
         rBrillo = (int) (r * brilloColor);
         gBrillo = (int) (g * brilloColor);
         bBrillo = (int) (b * brilloColor);
@@ -312,21 +337,29 @@ public class MainFragment extends Fragment {
         hex = String.format("#%06X", (0xFFFFFF & color));
 
         if (!hex.equals("#000000")) {
-            animMuestraColor(oldR, oldG, oldB);
+            if (animate) {
+                animMuestraColor();
+            } else {
+                setMuestraColor();
+                oldR = rBrillo;
+                oldG = gBrillo;
+                oldB = bBrillo;
+            }
         } else {
             clearMuestraColor();
         }
-
     }
 
     public void chooseFromHex(String hexReciente) {
         hex = hexReciente;
         int px = Color.parseColor(hex);
-        r = (int) (Color.red(px));
-        g = (int) (Color.green(px));
-        b = (int) (Color.blue(px));
+        rBrillo = (int) (Color.red(px));
+        gBrillo = (int) (Color.green(px));
+        bBrillo = (int) (Color.blue(px));
 
-        setMuestraColor();
+        calcBrillo(rBrillo, gBrillo, bBrillo);
+
+        animMuestraColor();
     }
 
     public void updateRecientes(View view) {
@@ -335,17 +368,24 @@ public class MainFragment extends Fragment {
                 recientes.add(hex);
             }
             if (!recientes.contains(hex)) {
-                recientes.add(0, hex);
-                if (recientes.size() > 12) {
-                    recientes.remove(12);
+                //TODO recientes size should be specified by settings
+                if (recientes.size() < 12 || overwrite) {
+                    recientes.add(0, hex);
+                    if (recientes.size() > 12) {
+                        recientes.remove(12);
+                    }
+                } else {
+                    if (vibration) {
+                        vibrator.vibrate(vibrationTime);
+                    }
+                    Toast.makeText(getContext(), "No hay espacio para guardar", Toast.LENGTH_SHORT).show();
                 }
-
             }
             cargarRecientes();
-            float brilloTmp = Float.parseFloat(brilloValue.getText().toString())/100;
-            BroadCastThread bct = new BroadCastThread((int)(r*brilloTmp) + "," + (int)(g*brilloTmp) + "," + (int)(b*brilloTmp), PORT);
-            bct.start();
         }
+        float brilloTmp = Float.parseFloat(brilloValue.getText().toString()) / 100;
+        BroadCastThread bct = new BroadCastThread((int)(r*brilloTmp) + "," + (int)(g*brilloTmp) + "," + (int)(b*brilloTmp), PORT);
+        bct.start();
     }
 
     public int getHigher(int r, int g, int b) {
@@ -394,9 +434,9 @@ public class MainFragment extends Fragment {
             clearMuestraColor();
             colorDialog.setBackgroundColor(getResources().getColor(R.color.nulo));
         }
-
-        valuesDialog.setText("RGB\n" + r + ", " + g + ", " + b + "\nHEX\n" + hex);
-
+        if (showCodes) {
+            valuesDialog.setText("RGB\n" + rBrillo + ", " + gBrillo + ", " + bBrillo + "\nHEX\n" + hex);
+        }
     }
 
     public void modRGB() {
@@ -481,21 +521,32 @@ public class MainFragment extends Fragment {
     }
 
     public void confirmDialog(int iterator) {
-        new AlertDialog.Builder(this.getActivity(), R.style.AlertDialogCustom)
-                .setTitle(R.string.delete_color_title)
-                .setMessage(R.string.delete_color_message)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        recientes.remove(iterator);
-                        // show recientes on log
-                        Log.d("Recientes", "array: " + recientes.toString());
-                        cargarRecientes();
-                        Toast.makeText(getContext(), R.string.color_deleted, Toast.LENGTH_SHORT).show();
-                    }})
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    }}).show();
+        AlertDialog.Builder confirmar = new AlertDialog.Builder(this.getActivity(), R.style.AlertDialogCustom);
+
+        View layout = getLayoutInflater().inflate(R.layout.confirm_dialog, null);
+
+        confirmar.setView(layout);
+
+        AlertDialog dialog = confirmar.show();
+
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        layout.findViewById(R.id.confirmDialogSuccess).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recientes.remove(iterator);
+                cargarRecientes();
+                Toast.makeText(getContext(), R.string.color_deleted, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        layout.findViewById(R.id.confirmDialogCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
     public void cargarRecientes() {
@@ -526,23 +577,40 @@ public class MainFragment extends Fragment {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (recientes.size() > iterator) {
+                        /*if (recientes.size() > iterator) {
                             chooseFromHex(recientes.get(iterator));
                             calcBrillo(r, g, b);
-                        }
-                    }
-                });
-                btn.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        if (recientes.size() > iterator) {
-                            confirmDialog(iterator);
-                            if (vibration) {
-                                Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-                                vibrator.vibrate(vibrationTime);
+                        }*/
+                        PopupMenu popup = new PopupMenu(getActivity(), view, Gravity.CENTER, 0, R.style.PopUpMenuCustom);
+                        popup.setForceShowIcon(true);
+                        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.popup_send:
+                                        return true;
+                                    case R.id.popup_set:
+                                        chooseFromHex(recientes.get(iterator));
+                                        return true;
+                                    case R.id.popup_delete:
+                                        confirmDialog(iterator);
+                                        return true;
+                                    default:
+                                        return false;
+                                }
                             }
+                        });
+                        popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                            @Override
+                            public void onDismiss(PopupMenu menu) {
+                            }
+                        });
+
+                        if (vibration) {
+                            vibrator.vibrate(vibrationTime);
                         }
-                        return true;
+
+                        popup.show();
                     }
                 });
             } else {
@@ -568,47 +636,31 @@ public class MainFragment extends Fragment {
     }
 
     private void setMuestraColor() {
-        muestra.setText("RGB\n" + r + ", " + g + ", " + b + "\nHEX\n" + hex);
+        if (showCodes) {
+            muestra.setText("RGB\n" + rBrillo + ", " + gBrillo + ", " + bBrillo + "\nHEX\n" + hex);
+        }
         muestra.setBackgroundColor(Color.rgb(rBrillo, gBrillo, bBrillo));
         chooseTextColor();
     }
 
-    private void animMuestraColor(int tmpR, int tmpG, int tmpB) {
-        ValueAnimator valAnimR = ValueAnimator.ofInt(tmpR, rBrillo);
-        valAnimR.setDuration(200);
-        valAnimR.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+    private void animMuestraColor() {
+        int endRGB = Color.argb(255, rBrillo, gBrillo, bBrillo);
+        ValueAnimator valAnimRGB = ValueAnimator.ofArgb(Color.argb(255, oldR, oldG, oldB), endRGB);
+        oldR = rBrillo;
+        oldG = gBrillo;
+        oldB = bBrillo;
+        valAnimRGB.setDuration(75);
+        valAnimRGB.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                int value = (int) animation.getAnimatedValue();
-                rBrillo = value;
+                Object color = animation.getAnimatedValue();
+                rBrillo = Color.red((int)color);
+                gBrillo = Color.green((int)color);
+                bBrillo = Color.blue((int)color);
                 setMuestraColor();
             }
         });
-        valAnimR.start();
-
-        ValueAnimator valAnimG = ValueAnimator.ofInt(tmpG, gBrillo);
-        valAnimG.setDuration(200);
-        valAnimG.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int value = (int) animation.getAnimatedValue();
-                gBrillo = value;
-                setMuestraColor();
-            }
-        });
-        valAnimG.start();
-
-        ValueAnimator valAnimB = ValueAnimator.ofInt(tmpB, bBrillo);
-        valAnimB.setDuration(200);
-        valAnimB.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int value = (int) animation.getAnimatedValue();
-                bBrillo = value;
-                setMuestraColor();
-            }
-        });
-        valAnimB.start();
+        valAnimRGB.start();
     }
 
     private boolean isBetween(double value, double min, double max) {
@@ -651,6 +703,7 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
         botones.clear();
+        clearMuestraColor();
         cargarRecientes();
     }
 

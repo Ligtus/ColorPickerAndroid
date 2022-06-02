@@ -11,34 +11,38 @@
             android:title="@string/recientes_settings_title" />
 
         <SwitchPreference
+            android:defaultValue="false"
+            android:key="showCodes"
+            android:title="@string/color_codes_settings" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="overwrite"
+            android:title="@string/overwrite_settings" />
+
+        <SwitchPreference
             android:defaultValue="true"
             android:key="vibration"
             android:title="@string/vibration_settings_title" />
 
         <SeekBarPreference
-
             android:defaultValue="15"
             android:key="vibrationTime"
             android:max="300"
             android:title="@string/vibrationTime_settings_title"
             app:min="5"
             app:seekBarIncrement="5"
-            app:showSeekBarValue="true" />
+            app:showSeekBarValue="true"
+            app:dependency="vibration"/>
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="@string/lampara_settings_header">
 
         <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
+            app:defaultValue="false"
+            app:key="auto_send"
+            app:title="@string/auto_send_settings" />
 
     </PreferenceCategory>
 
