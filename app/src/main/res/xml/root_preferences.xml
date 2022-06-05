@@ -4,7 +4,7 @@
     <PreferenceCategory app:title="@string/colores_settings_header">
 
         <ListPreference
-            android:defaultValue="12"
+            android:defaultValue="2"
             android:entries="@array/nRecientes"
             android:entryValues="@array/nRecientes_values"
             android:key="nRecientes"
@@ -40,9 +40,20 @@
     <PreferenceCategory app:title="@string/lampara_settings_header">
 
         <SwitchPreferenceCompat
-            app:defaultValue="false"
+            app:defaultValue="true"
             app:key="auto_send"
             app:title="@string/auto_send_settings" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/data_settings_header">
+
+        <Preference
+            android:selectable="true"
+            android:enabled="true"
+            android:key="delete_all"
+            android:title="@string/delete_all_colors_settings"
+            android:summary="@string/delete_context_settings" />
 
     </PreferenceCategory>
 

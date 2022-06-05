@@ -1,22 +1,39 @@
 package com.example.familylamp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Vibrator;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.ViewHolder> {
+    Vibrator vibrator;
     Context context;
     ArrayList<Recientes> recientes;
+    int buttons_per_row;
+    SharedPreferences sharedPreferences;
+    boolean vibration;
+    int vibrationTime;
 
-    public RecientesAdapter(Context context, ArrayList<Recientes> recientes) {
+    public RecientesAdapter(Context context, ArrayList<Recientes> recientes, int buttons_per_row) {
         this.context = context;
         this.recientes = recientes;
+        this.buttons_per_row = buttons_per_row;
+        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        sharedPreferences = context.getSharedPreferences("com.example.familylamp", Context.MODE_PRIVATE);
+        vibration = sharedPreferences.getBoolean("vibration", true);
+        vibrationTime = sharedPreferences.getInt("vibrationTime", 15);
     }
 
     @Override
@@ -26,8 +43,24 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.buttons.set(position, recientes.get(position).getButtons().get(position));
+    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        Recientes reciente = recientes.get(position);
+        String[] hexCodes = reciente.getHexCodes();
+        holder.buttonListener = reciente.getButtonListener();
+        for (int i = 0; i < buttons_per_row; i++) {
+            if (hexCodes[i] != "#000000") {
+                holder.buttons[i].setBackgroundColor(Color.parseColor(hexCodes[i]));
+                int iterator = i;
+                holder.buttons[i].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holder.buttonListener.execute(iterator+(buttons_per_row*position), holder.buttons[iterator]);
+                    }
+                });
+            } else {
+                holder.buttons[i].setBackgroundColor(context.getResources().getColor(R.color.appBackground));
+            }
+        }
     }
 
     @Override
@@ -36,14 +69,13 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        Context context;
-        ArrayList<Button> buttons = new ArrayList<>();
+        Button[] buttons = new Button[buttons_per_row];
+        MainFragment.ButtonListener buttonListener;
         public ViewHolder(View itemView, Context context) {
             super(itemView);
-            this.context = context;
-            for (int i = 0; i < 6; i++) {
-                buttons.add((Button) itemView.findViewById(context.getResources().getIdentifier("button_" + (i+1), "id", context.getPackageName())));
+            for (int i = 0; i < buttons_per_row; i++) {
+                buttons[i] = itemView.findViewById(context.getResources().getIdentifier("button_" + (i + 1), "id", context.getPackageName()));
             }
         }
     }
-}}
+}

@@ -11,6 +11,21 @@
         android:title="@string/set_color" />
 
     <item
+        android:id="@+id/popup_edit"
+        android:icon="@drawable/edit_24dp"
+        android:title="@string/edit_color" />
+
+    <item
+        android:id="@+id/popup_overwrite"
+        android:icon="@drawable/overwrite_24dp"
+        android:title="@string/overwrite_color" />
+
+    <item
+        android:id="@+id/popup_insert"
+        android:icon="@drawable/save_24dp"
+        android:title="@string/popup_insert" />
+
+    <item
         android:id="@+id/popup_delete"
         android:icon="@drawable/delete_24dp"
         android:title="@string/delete_color" />

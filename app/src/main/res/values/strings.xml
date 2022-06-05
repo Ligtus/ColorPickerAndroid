@@ -10,26 +10,20 @@
     <string name="sendTest">Texto a enviar</string>
     <string name="ipTest">IP a enviar</string>
     <string name="settingsTitle"><u>Configuración</u></string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
+    <!-- TOAST MESSAGES -->
     <string name="color_deleted">Color borrado</string>
+    <string name="all_colors_deleted">Todos los colores borrados</string>
+    <string name="color_overwritten">Color sobreescrito</string>
+
+    <!-- CONFIRM DIALOG -->
     <string name="delete_color_title">Borrar color</string>
     <string name="delete_color_message">¿Borrar este color?</string>
     <string name="confirm_delete">Borrar</string>
     <string name="cancel_delete">Cancelar</string>
+    <string name="overwrite_color_message">¿Sobreescribir este color?</string>
+    <string name="overwrite_color_title">Sobreescribir color</string>
+    <string name="confirm_overwrite">Sobreescribir</string>
 
     <!-- SETTINGS -->
     <string name="recientes_settings_title">Número de colores recientes</string>
@@ -40,9 +34,22 @@
     <string name="vibrationTime_settings_title">Intensidad de vibración (ms)</string>
     <string name="color_codes_settings">Mostrar códigos de color</string>
     <string name="overwrite_settings">Sobreescribir colores si no hay espacios libres</string>
+    <string name="data_settings_header">Datos</string>
+    <string name="delete_all_colors_settings">Borrar todos los colores</string>
+    <string name="delete_context_settings">Toca aquí para borrar todos los colores guardados</string>
+    <string name="delete_all_dialog_title">Borrar todos los colores</string>
+    <string name="delete_all_dialog_message">¿Estás seguro de que quieres borrar todos los colores?</string>
 
-    <!-- POPUP -->
+    <!-- POPUP MENU -->
     <string name="send_color">Enviar</string>
     <string name="set_color">Ver</string>
+    <string name="edit_color">Editar</string>
+    <string name="overwrite_color">Sobreescribir</string>
+    <string name="popup_insert">Guardar aquí</string>
     <string name="delete_color">Borrar</string>
+
+    <!-- ERRORS -->
+    <string name="error_no_space">No hay espacio para guardar</string>
+    <string name="error_no_color">No hay color seleccionado</string>
+    <string name="error_already_saved">Color ya guardado</string>
 </resources>

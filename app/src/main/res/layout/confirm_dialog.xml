@@ -14,7 +14,7 @@
     android:padding="20dp">
         <TextView
 
-            android:id="@+id/textTitle"
+            android:id="@+id/dialogTitle"
 
             android:layout_width="match_parent"
 
@@ -40,11 +40,11 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textTitle">
+            app:layout_constraintTop_toBottomOf="@+id/dialogTitle">
 
             <TextView
 
-                android:id="@+id/textMessage"
+                android:id="@+id/dialogMessage"
 
                 android:layout_width="match_parent"
 

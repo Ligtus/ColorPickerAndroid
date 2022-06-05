@@ -42,189 +42,10 @@
                 android:text="@string/recientes"
                 android:textSize="@dimen/_18ssp" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout1"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recientesRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_55sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/button_1"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <Button
-                    android:id="@+id/button_2"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                <Button
-                    android:id="@+id/button_3"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                <Button
-                    android:id="@+id/button_4"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                <Button
-                    android:id="@+id/button_5"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <Button
-                    android:id="@+id/button_6"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_55sdp"
-                android:layout_weight="0"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/button_7"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <Button
-                    android:id="@+id/button_8"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <Button
-                    android:id="@+id/button_9"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <Button
-                    android:id="@+id/button_10"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                <Button
-                    android:id="@+id/button_11"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                <Button
-                    android:id="@+id/button_12"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginHorizontal="@dimen/_7sdp"
-                    android:layout_weight="0"
-                    android:backgroundTint="@null"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:rippleColor="@null"
-                    app:strokeColor="@android:color/darker_gray"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-            </LinearLayout>
+                android:layout_height="@dimen/_90sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -269,11 +90,11 @@
                 <Button
                     android:id="@+id/muestra"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_80sdp"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="match_parent"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_weight="0"
-                    android:backgroundTint="@color/nulo"
+                    android:backgroundTint="@color/settingsBackground"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:textAlignment="center"
@@ -290,7 +111,7 @@
                     android:layout_weight="0"
                     android:background="@drawable/btn_background"
                     android:padding="@dimen/_10sdp"
-                    android:src="@drawable/send_24dp" />
+                    android:src="@drawable/save_36dp" />
 
             </LinearLayout>
 
@@ -332,5 +153,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/settings_36dp" />
+
+    <ImageButton
+        android:id="@+id/colorDialogButton"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@color/nulo"
+        android:cropToPadding="false"
+        android:scaleType="center"
+        android:src="@drawable/bars_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

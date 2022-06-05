@@ -1,21 +1,27 @@
 package com.example.familylamp;
 
-import android.widget.Button;
-
-import java.util.ArrayList;
-
 public class Recientes {
-    private ArrayList<Button> buttons = new ArrayList<>();
+    private String[] hexCodes;
+    private MainFragment.ButtonListener buttonListener;
 
-    public Recientes(ArrayList<Button> buttons) {
-        this.buttons = buttons;
+    public Recientes(String[] hexCodes, MainFragment.ButtonListener buttonListener) {
+        this.hexCodes = hexCodes;
+        this.buttonListener = buttonListener;
     }
 
-    public ArrayList<Button> getButtons() {
-        return buttons;
+    public String[] getHexCodes() {
+        return hexCodes;
     }
 
-    public void setButtons(ArrayList<Button> buttons) {
-        this.buttons = buttons;
+    public void setHexCodes(String[] hexCodes) {
+        this.hexCodes = hexCodes;
+    }
+
+    public MainFragment.ButtonListener getButtonListener() {
+        return buttonListener;
+    }
+
+    public void setButtonListener(MainFragment.ButtonListener buttonListener) {
+        this.buttonListener = buttonListener;
     }
 }
