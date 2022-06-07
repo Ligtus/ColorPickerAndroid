@@ -118,6 +118,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageButton
+        android:id="@+id/colorDialogButton"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@color/nulo"
+        android:cropToPadding="false"
+        android:scaleType="center"
+        android:src="@drawable/bars_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <View
         android:id="@+id/btnExplosion"
         android:layout_width="@dimen/_64sdp"
@@ -141,17 +153,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/settings_36dp" />
-
-    <ImageButton
-        android:id="@+id/colorDialogButton"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:adjustViewBounds="false"
-        android:backgroundTint="@color/nulo"
-        android:cropToPadding="false"
-        android:scaleType="center"
-        android:src="@drawable/bars_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
