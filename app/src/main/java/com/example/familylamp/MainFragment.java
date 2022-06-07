@@ -3,15 +3,17 @@ package com.example.familylamp;;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
@@ -67,15 +69,19 @@ public class MainFragment extends Fragment {
     SeekBar brillo;
 
     // Saved color variables and buttons
-    static ArrayList<String> recientes = new ArrayList<String>();
+    static ArrayList<String> colors = new ArrayList<String>();
 
     // Settings variables
     SharedPreferences prefs;
     boolean vibration, showCodes, autoSend, overwrite;
-    int vibrationTime, nRecientes;
+    int vibrationTime, nColors;
 
     // Vibrator variable
     Vibrator vibrator;
+
+    // SQLite variables
+    SQLiteHelper sqLiteHelper;
+    SQLiteDatabase colorsDB;
 
     public MainFragment() {
     }
@@ -122,21 +128,22 @@ public class MainFragment extends Fragment {
         overwrite = prefs.getBoolean("overwrite", true);
 
         // Load number of recientes, if it doesn't exist, set it to 2 (default)
-        nRecientes  = Integer.parseInt(prefs.getString("nRecientes", "2"));
+        nColors = Integer.parseInt(prefs.getString("nColors", "2"));
 
-        // Load index of saved colors if it exists, else set it to 0
-        int index = prefs.getInt("index", 0);
+        // Load saved colors from SQLite
+        sqLiteHelper = new SQLiteHelper(getActivity());
+        colorsDB = sqLiteHelper.getWritableDatabase();
 
-        // If there are saved colors, load them
-        if (index != 0) {
-            recientes.clear();
-            for (int i=0; i < index; i++) {
-                recientes.add(prefs.getString("color" + i, "#000000"));
+        Cursor cursor = colorsDB.rawQuery("SELECT * FROM " + sqLiteHelper.getTableName(), null);
+
+        try {
+            colors.clear(); // Clear the colors array in case it has elements
+            while(cursor.moveToNext()) {
+                colors.add(cursor.getString(1));
             }
-        }
-
-        if ((nRecientes * BUTTONS_PER_ROW) != recientes.size()) {
-            cargarRecientes();
+        } finally {
+            // Close the cursor
+            cursor.close();
         }
 
         // Bind the recycler view to the adapter
@@ -162,7 +169,7 @@ public class MainFragment extends Fragment {
         // Set "cambiar" button onClickListener to change color and start animation
         cambiarBtn.setOnClickListener(view1 -> {
             updateRecientes(getView(), adapter, 0);
-            if (recientes.size() < (BUTTONS_PER_ROW * nRecientes) || overwrite || !autoSend) {
+            if (colors.size() < (BUTTONS_PER_ROW * nColors) || overwrite || !autoSend) {
                 animCambiar.start();
             }
         });
@@ -281,8 +288,8 @@ public class MainFragment extends Fragment {
             }
         });
 
-        if (recientes.size() >= 1) {
-            chooseFromHex(recientes.get(0));
+        if (colors.size() >= 1) {
+            chooseFromHex(colors.get(0));
         }
 
 
@@ -361,17 +368,17 @@ public class MainFragment extends Fragment {
 
     public void updateRecientes(View view, RecyclerView.Adapter adapter, int index) {
         if (!hex.equals("#000000")) {
-            if (recientes.size() == 0) {
-                recientes.add(hex);
+            if (colors.size() == 0) {
+                colors.add(hex);
                 cargarRecientes();
                 adapter.notifyDataSetChanged();
                 return;
             }
-            if (!recientes.contains(hex)) {
-                if (recientes.size() < (BUTTONS_PER_ROW * nRecientes) || overwrite) {
-                    recientes.add(index, hex);
-                    if (recientes.size() > (BUTTONS_PER_ROW * nRecientes)) {
-                        recientes.remove(recientes.size() - 1);
+            if (!colors.contains(hex)) {
+                if (colors.size() < (BUTTONS_PER_ROW * nColors) || overwrite) {
+                    colors.add(index, hex);
+                    if (colors.size() > (BUTTONS_PER_ROW * nColors)) {
+                        colors.remove(colors.size() - 1);
                     }
                 } else {
                     if (vibration) {
@@ -401,8 +408,8 @@ public class MainFragment extends Fragment {
     }
 
     public void overwrite(int index) {
-        if (recientes.size() > index) {
-            recientes.set(index, hex);
+        if (colors.size() > index) {
+            colors.set(index, hex);
             cargarRecientes();
             adapter.notifyDataSetChanged();
             Toast.makeText(getContext(), R.string.color_overwritten, Toast.LENGTH_SHORT).show();
@@ -556,12 +563,12 @@ public class MainFragment extends Fragment {
          * clear the list and add the saved colors.
          */
         recientesList.clear();
-        for (int i = 0, j = 0; i < nRecientes; i++) {
+        for (int i = 0, j = 0; i < nColors; i++) {
             // Each reciente is a row of buttons
             String[] hexCodes = new String[BUTTONS_PER_ROW];
             for (int k = 0; k < BUTTONS_PER_ROW; k++, j++) {
-                if (j < recientes.size()) {
-                    hexCodes[k] = recientes.get(j);
+                if (j < colors.size()) {
+                    hexCodes[k] = colors.get(j);
                 } else {
                     hexCodes[k] = "#000000";
                 }
@@ -575,14 +582,13 @@ public class MainFragment extends Fragment {
     }
 
     public void guardarRecientes() {
-        SharedPreferences.Editor sharedPreferencesEditor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-        int index = 0;
-        for (String reciente: recientes) {
-            sharedPreferencesEditor.putString("color" + index, reciente);
-            index++;
+        colorsDB.execSQL("DELETE FROM " + sqLiteHelper.getTableName());
+
+        for(String hex : colors) {
+            ContentValues values = new ContentValues();
+            values.put("hexcode", hex);
+            colorsDB.insert(sqLiteHelper.getTableName(), null, values);
         }
-        sharedPreferencesEditor.putInt("index", index);
-        sharedPreferencesEditor.commit();
     }
 
     private void clearMuestraColor() {
@@ -649,7 +655,7 @@ public class MainFragment extends Fragment {
     }
 
     private void deleteColor(int index) {
-        recientes.remove(index);
+        colors.remove(index);
         cargarRecientes();
         adapter.notifyDataSetChanged();
         Toast.makeText(getContext(), R.string.color_deleted, Toast.LENGTH_SHORT).show();
@@ -676,10 +682,10 @@ public class MainFragment extends Fragment {
                         case R.id.popup_send:
                             return true;
                         case R.id.popup_set:
-                            chooseFromHex(recientes.get(iterator));
+                            chooseFromHex(colors.get(iterator));
                             return true;
                         case R.id.popup_overwrite:
-                            if (!recientes.contains(hex)) {
+                            if (!colors.contains(hex)) {
                                 cm.confirmDialog(
                                         getResources().getString(R.string.overwrite_color_title),
                                         getResources().getString(R.string.overwrite_color_message),
@@ -734,13 +740,14 @@ public class MainFragment extends Fragment {
     public void onStop() {
         super.onStop();
         guardarRecientes();
+        colorsDB.close();
+        sqLiteHelper.close();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         clearMuestraColor();
-        cargarRecientes();
     }
 
     public void settings() {

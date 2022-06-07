@@ -7,7 +7,7 @@
             android:defaultValue="2"
             android:entries="@array/nRecientes"
             android:entryValues="@array/nRecientes_values"
-            android:key="nRecientes"
+            android:key="nColors"
             android:title="@string/recientes_settings_title" />
 
         <SwitchPreference

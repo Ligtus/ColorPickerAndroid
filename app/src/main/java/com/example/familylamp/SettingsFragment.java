@@ -1,21 +1,13 @@
 package com.example.familylamp;
 
-import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-
-import org.w3c.dom.Text;
-
-import java.util.prefs.PreferenceChangeEvent;
-import java.util.prefs.PreferenceChangeListener;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -51,11 +43,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void deleteAll() {
-        for (int i = 0; i < MainFragment.recientes.size(); i++) {
+
+        SQLiteHelper sqLiteHelper = new SQLiteHelper(getActivity());
+        SQLiteDatabase colorsDB = sqLiteHelper.getWritableDatabase();
+
+        colorsDB.execSQL("DELETE FROM " + sqLiteHelper.getTableName());
+        /*for (int i = 0; i < MainFragment.colors.size(); i++) {
             sharedPreferences.edit().remove("color" + i).apply();
         }
-        sharedPreferences.edit().putInt("index", 0).apply();
-        MainFragment.recientes.clear();
+        sharedPreferences.edit().putInt("index", 0).apply();*/
+        MainFragment.colors.clear();
         Toast.makeText(getContext(), R.string.all_colors_deleted, Toast.LENGTH_SHORT).show();
     }
 }

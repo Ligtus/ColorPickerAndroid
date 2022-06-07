@@ -5,13 +5,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Vibrator;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.PopupMenu;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,15 +17,15 @@ import java.util.ArrayList;
 public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.ViewHolder> {
     Vibrator vibrator;
     Context context;
-    ArrayList<Recientes> recientes;
+    ArrayList<Recientes> colores;
     int buttons_per_row;
     SharedPreferences sharedPreferences;
     boolean vibration;
     int vibrationTime;
 
-    public RecientesAdapter(Context context, ArrayList<Recientes> recientes, int buttons_per_row) {
+    public RecientesAdapter(Context context, ArrayList<Recientes> colores, int buttons_per_row) {
         this.context = context;
-        this.recientes = recientes;
+        this.colores = colores;
         this.buttons_per_row = buttons_per_row;
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         sharedPreferences = context.getSharedPreferences("com.example.familylamp", Context.MODE_PRIVATE);
@@ -44,7 +41,7 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Recientes reciente = recientes.get(position);
+        Recientes reciente = colores.get(position);
         String[] hexCodes = reciente.getHexCodes();
         holder.buttonListener = reciente.getButtonListener();
         for (int i = 0; i < buttons_per_row; i++) {
@@ -65,7 +62,7 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
 
     @Override
     public int getItemCount() {
-        return recientes.size();
+        return colores.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

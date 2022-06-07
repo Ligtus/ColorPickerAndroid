@@ -38,7 +38,9 @@
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/dialog_background.xml" value="0.1" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/edit_24dp.xml" value="0.218" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/eye2_24dp.xml" value="0.1995" />
+        <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/eye_24dp.xml" value="0.218" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3728205128205128" />
+        <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/overwrite_24dp.xml" value="0.218" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/round_format_paint_black_24dp.xml" value="0.218" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/rounded_corners_background.xml" value="0.134" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/rounded_dialog.xml" value="0.3728205128205128" />
@@ -64,6 +66,7 @@
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/layout-sw320dp/activity_main.xml" value="0.25" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/layout-sw400dp-land/fragment_main.xml" value="0.44375" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/layout-sw400dp-port/fragment_main.xml" value="0.2830269345874305" />
+        <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/layout-sw400dp/fragment_main.xml" value="0.2830269345874305" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/layout-sw450dp/fragment_main.xml" value="0.58375" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/layout-sw600dp-land/activity_main.xml" value="0.33" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/layout-sw600dp-land/fragment_main.xml" value="0.3859375" />
