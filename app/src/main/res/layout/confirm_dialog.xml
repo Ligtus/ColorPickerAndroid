@@ -77,7 +77,7 @@
                     android:layout_marginHorizontal="@dimen/_5sdp"
 
                     android:text="@string/cancel_delete"
-
+                    android:backgroundTint="@color/buttonsColor"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/_8ssp"
                     app:cornerRadius="@dimen/_10sdp" />
@@ -93,7 +93,7 @@
                     android:layout_marginHorizontal="@dimen/_5sdp"
 
                     android:text="@string/confirm_delete"
-
+                    android:backgroundTint="@color/buttonsColor"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/_8ssp"
                     app:cornerRadius="@dimen/_10sdp" />

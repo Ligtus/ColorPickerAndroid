@@ -14,7 +14,14 @@
             android:id="@+id/action_nav_home_to_nav_settings"
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_in" />
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_mainFragment_to_lampFragment"
+            app:destination="@id/lampFragment"
+            app:enterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/lampFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -23,17 +30,17 @@
         <action
             android:id="@+id/action_settingsFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_lampListFragment"
-            app:destination="@id/lampListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/lampListFragment"
-        android:name="com.example.familylamp.LampListFragment"
-        android:label="fragment_item_list"
-        tools:layout="@layout/fragment_item_list" >
+        android:id="@+id/lampFragment"
+        android:name="com.example.familylamp.LampFragment"
+        android:label="fragment_lamp"
+        tools:layout="@layout/fragment_lamp" >
         <action
-            android:id="@+id/action_lampListFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            android:id="@+id/action_lampFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/fade_in"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

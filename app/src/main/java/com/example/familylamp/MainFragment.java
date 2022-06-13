@@ -1,4 +1,4 @@
-package com.example.familylamp;;
+package com.example.familylamp;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -14,13 +14,16 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -38,16 +41,21 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class MainFragment extends Fragment {
 
     // Connection variables
-    private final int PORT = 11555;
+    private final int PORT = 11556;
 
     // Color circle view and dialog variables
     ImageView iv;
-    ImageView colorDialogButton;
+    ImageButton colorDialogButton, connectButton, settingsButton;
     Bitmap bitmap;
     int px = 0;
 
@@ -62,7 +70,8 @@ public class MainFragment extends Fragment {
     int oldR = 0, oldG = 0, oldB = 0;
     int rBrillo = 0, gBrillo = 0, bBrillo = 0;
     int r=0, g=0, b=0;
-    String hex = "#000000";
+    String hex = "#000000", hexUnedit;
+    int editingIndex = -1;
 
     // Brillo variables and views
     TextView brilloValue;
@@ -82,6 +91,14 @@ public class MainFragment extends Fragment {
     // SQLite variables
     SQLiteHelper sqLiteHelper;
     SQLiteDatabase colorsDB;
+
+    // UDP Variables
+    //UDPReceiver udpReceiver;
+    UDPSender udpSender;
+    //DatagramSocket socket;
+    InetAddress lampAddress = null;
+    public Handler handler;
+
 
     public MainFragment() {
     }
@@ -111,6 +128,26 @@ public class MainFragment extends Fragment {
         // Load application preferences
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+        // Load lamp ip address
+        try {
+            lampAddress = InetAddress.getByName(prefs.getString("ip", null));
+            Log.d("address", "onViewCreated: " + lampAddress.getHostAddress());
+        } catch (UnknownHostException e) {
+            Toast.makeText(getActivity(), R.string.error_ip_invalid, Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+
+        //handler = new Handler();
+
+        /*try {
+            socket = new DatagramSocket(PORT);
+            UDPReceiver udpReceiver = new UDPReceiver(socket, handler, this);
+            udpReceiver.start();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }*/
+
+
         // Load vibration preferences
         vibration = prefs.getBoolean("vibration", true);
         vibrationTime = prefs.getInt("vibrationTime", 15);
@@ -122,7 +159,7 @@ public class MainFragment extends Fragment {
         showCodes = prefs.getBoolean("showCodes", false);
 
         // Load automatic send preferences
-        autoSend = prefs.getBoolean("auto_send", false);
+        autoSend = prefs.getBoolean("auto_send", true);
 
         // Load overwrite preferences
         overwrite = prefs.getBoolean("overwrite", true);
@@ -138,7 +175,8 @@ public class MainFragment extends Fragment {
 
         try {
             colors.clear(); // Clear the colors array in case it has elements
-            while(cursor.moveToNext()) {
+
+            while(cursor.moveToNext() && (cursor.getPosition() < BUTTONS_PER_ROW * nColors)) {
                 colors.add(cursor.getString(1));
             }
         } finally {
@@ -155,7 +193,7 @@ public class MainFragment extends Fragment {
         // Show saved colors
         cargarRecientes();
 
-        // Set app main background color, this is used to reset the color in case settings has been opened
+        // Set app main background color, this is used to reset the color in case other fragments have been opened
         getActivity().findViewById(R.id.nav_host_fragment).setBackgroundColor(getResources().getColor(R.color.appBackground));
 
         // Get "cambiar" button, drawable and animation
@@ -169,33 +207,78 @@ public class MainFragment extends Fragment {
         // Set "cambiar" button onClickListener to change color and start animation
         cambiarBtn.setOnClickListener(view1 -> {
             updateRecientes(getView(), adapter, 0);
-            if (colors.size() < (BUTTONS_PER_ROW * nColors) || overwrite || !autoSend) {
+            if (colors.size() < (BUTTONS_PER_ROW * nColors) || overwrite) {
                 animCambiar.start();
+            }
+            if (!autoSend) {
+                sendColor();
             }
         });
 
         iv = getView().findViewById(R.id.color);
         colorDialogButton = getView().findViewById(R.id.colorDialogButton);
+        settingsButton = getView().findViewById(R.id.buttonSettings);
+        connectButton = getView().findViewById(R.id.connectButton);
         muestra = getView().findViewById(R.id.muestra);
         iv.setDrawingCacheEnabled(true);
         iv.buildDrawingCache(true);
         brillo = getView().findViewById(R.id.brillo);
         brilloValue = getView().findViewById(R.id.brilloValue);
 
+        Drawable colorDialogImg = colorDialogButton.getDrawable();
+        AnimatedVectorDrawable animColorDialog = (AnimatedVectorDrawable) colorDialogImg;
         colorDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                animColorDialog.start();
                 modRGB();
             }
         });
 
-        ImageButton btnSettings = getView().findViewById(R.id.buttonSettings);
-        View explosion = getView().findViewById(R.id.btnExplosion);
+        View explosionLamps = getView().findViewById(R.id.btnExplosionLamps);
+        Drawable connectImg = connectButton.getDrawable();
+        AnimatedVectorDrawable animConnect = (AnimatedVectorDrawable) connectImg;
+        Animation animationLamps = AnimationUtils.loadAnimation(getContext(), R.anim.btn_explosion_anim);
+        animationLamps.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
 
-        Drawable imgSettings = btnSettings.getDrawable();
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                connect();
+                explosionLamps.setVisibility(View.INVISIBLE);
+                connectButton.setVisibility(View.INVISIBLE);
+                getActivity().findViewById(R.id.nav_host_fragment).setBackgroundColor(getResources().getColor(R.color.settingsBackground));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        connectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!animationLamps.hasStarted()) {
+                    // TranslationZ defines the depth of the element so that it is not visible over the other elements
+                    settingsButton.setTranslationZ(0);
+                    explosionLamps.setTranslationZ(1);
+                    connectButton.setTranslationZ(1);
+                    connectButton.setFadingEdgeLength(0);
+                    explosionLamps.setVisibility(View.VISIBLE);
+                    explosionLamps.startAnimation(animationLamps);
+                    animConnect.start();
+                }
+            }
+        });
+
+        View explosionSettings = getView().findViewById(R.id.btnExplosionSettings);
+
+        Drawable imgSettings = settingsButton.getDrawable();
         AnimatedVectorDrawable animSettings = (AnimatedVectorDrawable) imgSettings;
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.btn_explosion_anim);
-        animation.setAnimationListener(new Animation.AnimationListener() {
+        Animation animationSettings = AnimationUtils.loadAnimation(getContext(), R.anim.btn_explosion_anim);
+        animationSettings.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
             }
@@ -203,8 +286,8 @@ public class MainFragment extends Fragment {
             @Override
             public void onAnimationEnd(Animation animation) {
                 settings();
-                explosion.setVisibility(View.INVISIBLE);
-                btnSettings.setVisibility(View.INVISIBLE);
+                explosionSettings.setVisibility(View.INVISIBLE);
+                settingsButton.setVisibility(View.INVISIBLE);
                 getActivity().findViewById(R.id.nav_host_fragment).setBackgroundColor(getResources().getColor(R.color.settingsBackground));
 
             }
@@ -214,13 +297,17 @@ public class MainFragment extends Fragment {
             }
         });
 
-        btnSettings.setOnClickListener(new View.OnClickListener() {
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                explosion.setVisibility(View.VISIBLE);
-                explosion.startAnimation(animation);
-                animSettings.start();
-                //settings();
+                if (!animationSettings.hasStarted()) {
+                    settingsButton.setTranslationZ(1);
+                    explosionSettings.setTranslationZ(1);
+                    connectButton.setTranslationZ(0);
+                    explosionSettings.setVisibility(View.VISIBLE);
+                    explosionSettings.startAnimation(animationSettings);
+                    animSettings.start();
+                }
             }
         });
 
@@ -260,6 +347,11 @@ public class MainFragment extends Fragment {
 
                         chooseColor(false);
 
+                    }
+                    return true;
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (autoSend) {
+                        sendColor();
                     }
                     return true;
                 }
@@ -366,6 +458,15 @@ public class MainFragment extends Fragment {
         animMuestraColor();
     }
 
+    public void sendColor() {
+        if (lampAddress != null && !lampAddress.getHostAddress().equals("::1")) {
+            udpSender = new UDPSender(lampAddress, PORT, "Color," + hex);
+            udpSender.start();
+        } else {
+            Log.d("Lamp", getResources().getString(R.string.error_ip_invalid));
+        }
+    }
+
     public void updateRecientes(View view, RecyclerView.Adapter adapter, int index) {
         if (!hex.equals("#000000")) {
             if (colors.size() == 0) {
@@ -375,11 +476,20 @@ public class MainFragment extends Fragment {
                 return;
             }
             if (!colors.contains(hex)) {
+                if (editingIndex != -1) {
+                    colors.set(editingIndex, hex);
+                    editColor(editingIndex, hex);
+                    editingIndex = -1;
+                    Toast.makeText(getContext(), R.string.color_edited, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (colors.size() < (BUTTONS_PER_ROW * nColors) || overwrite) {
                     colors.add(index, hex);
                     if (colors.size() > (BUTTONS_PER_ROW * nColors)) {
                         colors.remove(colors.size() - 1);
                     }
+                    cargarRecientes();
+                    adapter.notifyDataSetChanged();
                 } else {
                     if (vibration) {
                         vibrator.vibrate(vibrationTime);
@@ -394,17 +504,12 @@ public class MainFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.error_already_saved, Toast.LENGTH_SHORT).show();
                 return;
             }
-            cargarRecientes();
-            adapter.notifyDataSetChanged();
         } else {
             if (vibration) {
                 vibrator.vibrate(vibrationTime);
             }
             Toast.makeText(getContext(), R.string.error_no_color, Toast.LENGTH_SHORT).show();
         }
-        float brilloTmp = Float.parseFloat(brilloValue.getText().toString()) / 100;
-        BroadCastThread bct = new BroadCastThread((int)(r*brilloTmp) + "," + (int)(g*brilloTmp) + "," + (int)(b*brilloTmp), PORT);
-        bct.start();
     }
 
     public void overwrite(int index) {
@@ -480,7 +585,7 @@ public class MainFragment extends Fragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.rgb_dialog);
-        dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_background));
+        dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_background, null));
 
         TextView valuesDialog = dialog.findViewById(R.id.valuesDialog);
         View colorDialog = dialog.findViewById(R.id.colorDialog);
@@ -543,7 +648,7 @@ public class MainFragment extends Fragment {
 
         chooseColorDialog(colorDialog, valuesDialog);
 
-        Button confirm = dialog.findViewById(R.id.confirmDialog);
+        Button confirm = dialog.findViewById(R.id.cancelDialog);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -596,10 +701,25 @@ public class MainFragment extends Fragment {
         muestra.setBackgroundColor(getResources().getColor(R.color.nulo));
     }
 
+    private void editColor(int index, String hex) {
+        Recientes reciente = recientesList.get(index/BUTTONS_PER_ROW);
+        String[] hexCodes = reciente.getHexCodes();
+        hexCodes[index%BUTTONS_PER_ROW] = hex;
+        reciente.setHexCodes(hexCodes);
+        recientesList.set(index/BUTTONS_PER_ROW, reciente);
+        adapter.notifyItemChanged(index/BUTTONS_PER_ROW);
+    }
+
     private void setMuestraColor() {
         if (showCodes) {
             muestra.setText("RGB\n" + rBrillo + ", " + gBrillo + ", " + bBrillo + "\nHEX\n" + hex);
         }
+
+        // Also set the background color of a button in editing mode
+        if (editingIndex != -1) {
+            editColor(editingIndex, hex);
+        }
+
         muestra.setBackgroundColor(Color.rgb(rBrillo, gBrillo, bBrillo));
         chooseTextColor();
     }
@@ -676,6 +796,10 @@ public class MainFragment extends Fragment {
             PopupMenu popup = new PopupMenu(getActivity(), btn, Gravity.CENTER, 0, R.style.PopUpMenuCustom);
             popup.setForceShowIcon(true);
             popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+            if (editingIndex != -1) {
+                popup.getMenu().findItem(R.id.popup_edit).setVisible(false);
+                popup.getMenu().findItem(R.id.popup_cancel_edit).setVisible(true);
+            }
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
@@ -683,6 +807,17 @@ public class MainFragment extends Fragment {
                             return true;
                         case R.id.popup_set:
                             chooseFromHex(colors.get(iterator));
+                            return true;
+                        case R.id.popup_edit:
+                            editingIndex = iterator;
+                            hexUnedit = colors.get(iterator);
+                            chooseFromHex(colors.get(iterator));
+                            Toast.makeText(getContext(), R.string.color_editing, Toast.LENGTH_SHORT).show();
+                            return true;
+                        case R.id.popup_cancel_edit:
+                            editColor(editingIndex, hexUnedit);
+                            editingIndex = -1;
+                            Toast.makeText(getContext(), R.string.color_edit_canceled, Toast.LENGTH_SHORT).show();
                             return true;
                         case R.id.popup_overwrite:
                             if (!colors.contains(hex)) {
@@ -740,17 +875,33 @@ public class MainFragment extends Fragment {
     public void onStop() {
         super.onStop();
         guardarRecientes();
-        colorsDB.close();
-        sqLiteHelper.close();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //socket.close();
+
+        if (colorsDB != null) {
+            colorsDB.close();
+        }
+        if (sqLiteHelper != null) {
+            sqLiteHelper.close();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
         clearMuestraColor();
     }
 
     public void settings() {
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_nav_settings);
+    }
+
+    public void connect() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_to_lampFragment);
     }
 }

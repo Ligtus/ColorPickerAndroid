@@ -16,6 +16,12 @@
         android:title="@string/edit_color" />
 
     <item
+        android:id="@+id/popup_cancel_edit"
+        android:icon="@drawable/cancel_24dp"
+        android:title="@string/popup_cancel_edit"
+        android:visible="false"/>
+
+    <item
         android:id="@+id/popup_overwrite"
         android:icon="@drawable/overwrite_24dp"
         android:title="@string/overwrite_color" />

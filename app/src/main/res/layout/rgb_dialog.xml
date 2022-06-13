@@ -65,12 +65,13 @@
         android:layout_weight="1" />
 
     <Button
-        android:id="@+id/confirmDialog"
+        android:id="@+id/cancelDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/confirm"
         android:textSize="10sp"
+        android:backgroundTint="@color/buttonsColor"
         app:cornerRadius="@dimen/_10sdp"/>
 
 </LinearLayout>

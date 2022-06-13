@@ -17,4 +17,5 @@
     <color name="settingsBackground">#333333</color>
     <color name="appBackground">#000000</color>
     <color name="textColor">#FAFAFA</color>
+    <color name="buttonsColor">#301EA0</color>
 </resources>

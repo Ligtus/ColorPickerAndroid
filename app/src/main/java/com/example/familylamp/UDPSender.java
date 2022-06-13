@@ -1,30 +1,33 @@
 package com.example.familylamp;
 
+import android.util.Log;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
-public class UDPThread extends Thread {
-    private InetSocketAddress address = null;
-    private int port = 11555;
+public class UDPSender extends Thread {
+    private InetAddress address = null;
+    private int port;
     private String message = "";
 
-    public UDPThread(InetAddress address, int port, String message) {
-        this.address = new InetSocketAddress(address, port);
+    public UDPSender(InetAddress address, int port, String message) {
+        this.address = address;
         this.port = port;
         this.message = message;
     }
 
     public void run() {
         try {
-            DatagramSocket socket = new DatagramSocket(address);
+            DatagramSocket socket = new DatagramSocket();
             byte[] buf = message.getBytes();
-            DatagramPacket packet = new DatagramPacket(buf, buf.length, address);
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
             socket.send(packet);
             socket.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

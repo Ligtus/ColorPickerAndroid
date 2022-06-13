@@ -25,6 +25,7 @@ public class BroadCastThread extends Thread {
             byte[] data = message.getBytes();
             socket.send(new java.net.DatagramPacket(data, data.length, java.net.InetAddress.getByName("255.255.255.255"), port));
             socket.close();
+            this.interrupt();
         } catch (Exception e) {
             e.printStackTrace();
         }

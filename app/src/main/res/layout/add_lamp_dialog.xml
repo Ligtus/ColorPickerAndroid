@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:animationCache="false"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/dialog_background">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/add_lamp_title"
+        android:textSize="@dimen/_18ssp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/add_lamp_name"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+    <EditText
+        android:id="@+id/lampName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/_30sdp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:hint="@string/add_lamp_hint_name"
+        android:textStyle="normal"
+        android:textSize="@dimen/_14sdp"
+        android:autofillHints="name"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/add_lamp_ip"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+    <EditText
+        android:id="@+id/lampIp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/_30sdp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:hint="@string/add_lamp_hint_ip"
+        android:textStyle="normal"
+        android:textSize="@dimen/_14sdp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/addLampCancel"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:text="@string/add_lamp_cancel"
+            android:textSize="@dimen/_10sdp"
+            app:cornerRadius="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:backgroundTint="@color/buttonsColor"
+            android:textColor="@color/textColor"/>
+
+        <Button
+            android:id="@+id/addLampConfirm"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:text="@string/add_lamp_confirm"
+            android:textSize="@dimen/_10sdp"
+            app:cornerRadius="@dimen/_10sdp"
+            android:backgroundTint="@color/buttonsColor"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:textColor="@color/textColor"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -22,7 +22,7 @@ public class ConnectionScreen extends AppCompatActivity {
         setContentView(R.layout.connect_screen);
     }
 
-    public void sendMessage(View view) {
+    /*public void sendMessage(View view) {
         BroadCastThread bcast = new BroadCastThread("Holi", 11555);
         bcast.start();
     }
@@ -55,5 +55,5 @@ public class ConnectionScreen extends AppCompatActivity {
     public void goToMain(View view){
         Intent i = new Intent(this, com.example.familylamp.MainActivity.class);
         startActivity(i);
-    }
+    }*/
 }

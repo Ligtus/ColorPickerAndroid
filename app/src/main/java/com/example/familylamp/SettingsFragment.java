@@ -3,6 +3,7 @@ package com.example.familylamp;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.widget.Toast;
 
 import androidx.preference.Preference;
@@ -12,6 +13,7 @@ import androidx.preference.PreferenceManager;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     SharedPreferences sharedPreferences;
+    Vibrator vibrator;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -40,6 +42,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+
+        Preference vibrationSeekBar = findPreference("vibrationTime");
+
+        vibrationSeekBar.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                vibrator = (Vibrator) getContext().getSystemService(getContext().VIBRATOR_SERVICE);
+                vibrator.vibrate((int)newValue);
+                return true;
+            }
+        });
     }
 
     private void deleteAll() {
@@ -48,10 +61,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         SQLiteDatabase colorsDB = sqLiteHelper.getWritableDatabase();
 
         colorsDB.execSQL("DELETE FROM " + sqLiteHelper.getTableName());
-        /*for (int i = 0; i < MainFragment.colors.size(); i++) {
-            sharedPreferences.edit().remove("color" + i).apply();
-        }
-        sharedPreferences.edit().putInt("index", 0).apply();*/
+
         MainFragment.colors.clear();
         Toast.makeText(getContext(), R.string.all_colors_deleted, Toast.LENGTH_SHORT).show();
     }
