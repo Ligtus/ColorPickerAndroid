@@ -23,7 +23,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:max="255"
-        android:min="0"
+        android:min="1"
         android:padding="0dp"
         android:progressTint="@color/red"
         android:thumbTint="@color/red" />
@@ -34,7 +34,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:max="255"
-        android:min="0"
+        android:min="1"
         android:padding="0dp"
         android:progressTint="@color/green"
         android:thumbTint="@color/green" />
@@ -45,7 +45,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:max="255"
-        android:min="0"
+        android:min="1"
         android:padding="0dp"
         android:progressTint="@color/blue"
         android:thumbTint="@color/blue" />

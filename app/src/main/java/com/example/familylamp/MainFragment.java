@@ -561,6 +561,13 @@ public class MainFragment extends Fragment {
         bBrillo = (int) (b * brilloColor);
     }
 
+    public void calcColorsFromBrillo() {
+        float brilloColor = Float.parseFloat(brilloValue.getText().toString()) / 100;
+        r = (int) (rBrillo / brilloColor);
+        g = (int) (gBrillo / brilloColor);
+        b = (int) (bBrillo / brilloColor);
+    }
+
     public void chooseColorDialog(View colorDialog, TextView valuesDialog) {
         int color = Color.rgb(rBrillo, gBrillo, bBrillo);
 
@@ -568,7 +575,6 @@ public class MainFragment extends Fragment {
 
         if (!hex.equals("#000000")) {
             calcBrillo(rBrillo, gBrillo, bBrillo);
-            calcBrilloColors();
             setMuestraColor();
             colorDialog.setBackgroundColor(color);
         } else {
@@ -595,7 +601,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                r = progress;
+                rBrillo = progress;
                 chooseColorDialog(colorDialog, valuesDialog);
             }
 
@@ -605,6 +611,9 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                if (autoSend) {
+                    sendColor();
+                }
             }
         });
 
@@ -614,7 +623,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                g = progress;
+                gBrillo = progress;
                 chooseColorDialog(colorDialog, valuesDialog);
             }
 
@@ -624,6 +633,9 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                if (autoSend) {
+                    sendColor();
+                }
             }
         });
 
@@ -633,7 +645,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                b = progress;
+                bBrillo = progress;
                 chooseColorDialog(colorDialog, valuesDialog);
             }
 
@@ -643,8 +655,13 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                if (autoSend) {
+                    sendColor();
+                }
             }
         });
+
+        calcColorsFromBrillo();
 
         chooseColorDialog(colorDialog, valuesDialog);
 
@@ -654,6 +671,9 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 updateRecientes(getView(), adapter, 0);
+                if (autoSend) {
+                    sendColor();
+                }
                 dialog.dismiss();
             }
         });
