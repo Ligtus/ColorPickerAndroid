@@ -39,7 +39,7 @@ public class LampFragment extends Fragment {
 
     public ArrayList<Lamp> lamps;
     public LampAdapter lampAdapter;
-    ImageView skipButton, addButton;
+    ImageView skipButton, addButton, loadingImage;
     RecyclerView lampRecyclerView;
     MultiCastReceiveThread mcrt = null;
     //MultiCastSendThread mcst = null;
@@ -70,6 +70,10 @@ public class LampFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        loadingImage = getView().findViewById(R.id.loadingImage);
+        AnimatedVectorDrawable loadingAnimation = (AnimatedVectorDrawable) loadingImage.getDrawable();
+        loadingAnimation.start();
+
         handler = new Handler();
 
         WifiManager wifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(getContext().WIFI_SERVICE);
@@ -79,11 +83,11 @@ public class LampFragment extends Fragment {
 
         lamps = new ArrayList<>();
 
-        try {
+        /*try {
             lamps.add(new Lamp("Ejemplo", InetAddress.getByName("192.168.0.16")));
         } catch (UnknownHostException e) {
             e.printStackTrace();
-        }
+        }*/
 
         lampRecyclerView = view.findViewById(R.id.lampRecyclerView);
         lampAdapter = new LampAdapter(lamps, this);
@@ -135,8 +139,7 @@ public class LampFragment extends Fragment {
                     String name = lampName.getText().toString();
                     InetAddress ip = InetAddress.getByName(lampIp.getText().toString());
                     Lamp lamp = new Lamp(name, ip);
-                    lamps.add(lamp);
-                    lampAdapter.notifyItemInserted(lamps.size() - 1);
+                    addLamp(lamp);
                     Toast.makeText(getContext(), R.string.add_lamp_added, Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(getContext(), R.string.add_lamp_error, Toast.LENGTH_SHORT).show();
@@ -164,6 +167,9 @@ public class LampFragment extends Fragment {
             if (!lamps.contains(lamp)) {
                 lamps.add(lamp);
                 lampAdapter.notifyItemInserted(lamps.size() - 1);
+            }
+            if (lamps.size() > 0 && loadingImage.getVisibility() != View.INVISIBLE) {
+                loadingImage.setVisibility(View.INVISIBLE);
             }
         } catch (Exception e) {
             e.printStackTrace();
