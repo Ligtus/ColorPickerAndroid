@@ -14,6 +14,7 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -60,10 +61,9 @@ public class MainFragment extends Fragment {
     ImageView iv;
     ImageButton colorDialogButton, connectButton, settingsButton;
     Bitmap bitmap;
-    int px = 0;
 
     // Recientes variables
-    ArrayList<Recientes> recientesList = new ArrayList<>();
+    final ArrayList<Recientes> recientesList = new ArrayList<>();
     RecyclerView recientesRecyclerView;
     RecientesAdapter adapter;
     final int BUTTONS_PER_ROW = 6;
@@ -81,7 +81,7 @@ public class MainFragment extends Fragment {
     SeekBar brillo;
 
     // Saved color variables and buttons
-    static ArrayList<String> colors = new ArrayList<String>();
+    static final ArrayList<String> colors = new ArrayList<String>();
 
     // Settings variables
     SharedPreferences prefs;
@@ -104,8 +104,7 @@ public class MainFragment extends Fragment {
     }
 
     public static MainFragment newInstance() {
-        MainFragment fragment = new MainFragment();
-        return fragment;
+        return new MainFragment();
     }
 
     @Override
@@ -122,7 +121,7 @@ public class MainFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // Get all views
@@ -206,7 +205,7 @@ public class MainFragment extends Fragment {
 
         // Set "cambiar" button onClickListener to change color and start animation
         cambiarBtn.setOnClickListener(view1 -> {
-            updateRecientes(getView(), adapter, 0);
+            updateRecientes(adapter, 0);
             if (colors.size() < (BUTTONS_PER_ROW * nColors) || overwrite) {
                 animCambiar.start();
             }
@@ -356,7 +355,7 @@ public class MainFragment extends Fragment {
                                           boolean fromUser) {
                 brilloValue.setText(String.valueOf(progress));
                 if (fromUser) {
-                    if (hex != "#000000") {
+                    if (!hex.equals("#000000")) {
                         chooseColor(true);
                     }
                 }
@@ -449,7 +448,7 @@ public class MainFragment extends Fragment {
     }
 
     // Method to update colors array with the new color
-    public void updateRecientes(View view, RecyclerView.Adapter adapter, int index) {
+    public void updateRecientes(RecyclerView.Adapter adapter, int index) {
         // If the color is not black...
         if (!hex.equals("#000000")) {
             // If the colors array is empty, add the new color
@@ -516,7 +515,7 @@ public class MainFragment extends Fragment {
 
     // Method to get the higher of three values passed as parameters
     public int getHigher(int r, int g, int b) {
-        int higher = 0;
+        int higher;
         if (r > g) {
             if (r > b) {
                 higher = r;
@@ -685,7 +684,7 @@ public class MainFragment extends Fragment {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateRecientes(getView(), adapter, 0);
+                updateRecientes(adapter, 0);
                 // If autoSend is enabled, send the color
                 if (autoSend) {
                     sendColor();
@@ -841,7 +840,7 @@ public class MainFragment extends Fragment {
      */
     public class ButtonListener {
         // Default constructor
-        ButtonListener() {};
+        ButtonListener() {}
 
         // Method to handle the click on a color
         public void execute(int iterator, Button btn) {
@@ -898,7 +897,7 @@ public class MainFragment extends Fragment {
                             }
                             return true;
                         case R.id.popup_insert:
-                            updateRecientes(btn, adapter, iterator);
+                            updateRecientes(adapter, iterator);
                             return true;
                         case R.id.popup_delete:
                             cm.confirmDialog(
