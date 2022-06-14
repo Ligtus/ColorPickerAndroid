@@ -6,11 +6,13 @@ public class Lamp {
     private String name;
     private InetAddress ip;
 
+    // Constructor
     public Lamp(String name, InetAddress ip) {
         this.name = name;
         this.ip = ip;
     }
 
+    // Getters and setters
     public String getName() {
         return name;
     }
@@ -27,6 +29,7 @@ public class Lamp {
         this.ip = ip;
     }
 
+    // Override hashcode and equals to compare lamps
     @Override
     public int hashCode() {
         return name.hashCode();

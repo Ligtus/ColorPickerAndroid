@@ -8,6 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.familylamp.R;
 
+/**
+ * @author LigtusEnd
+ * This is a default implementation of the {@link RecyclerView.ItemAnimator} interface
+ * The only thing changed is the {@link #animateAdd(RecyclerView.ViewHolder)} method, for the animation
+ * where lamps are added to the list. This can be viewed in the LampFragment.
+ */
+
 public class LampAnimator extends DefaultItemAnimator {
 
     @Override
