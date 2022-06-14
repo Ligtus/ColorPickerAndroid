@@ -28,6 +28,7 @@
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable-night/settings_36dp.xml" value="0.172" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable-night/skip_36dp.xml" value="0.218" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable-night/skip_48dp.xml" value="0.218" />
+        <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable-night/tune_36dp.xml" value="0.2345" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable-notnight/btn_explosion_back.xml" value="0.244" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable-v24/connect_36dp.xml" value="0.1545" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3728205128205128" />
@@ -35,8 +36,10 @@
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable-v24/skip_48dp.xml" value="0.1545" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/add_48dp.xml" value="0.1765" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/animatorsettings.xml" value="0.172" />
+        <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/avd_anim (3).xml" value="0.231" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/avd_anim.xml" value="0.244" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/bars_24dp.xml" value="0.149" />
+        <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/baseline_arrow_circle_up_black_24dp.xml" value="0.2345" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/baseline_delete_white_24dp.xml" value="0.105" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/baseline_save_black_36dp.xml" value="0.19" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/baseline_settings_white_24dp.xml" value="0.244" />
@@ -60,6 +63,7 @@
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/round_arrow_circle_right_black_36dp.xml" value="0.218" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/round_format_paint_black_24dp.xml" value="0.218" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/round_keyboard_arrow_right_black_48dp.xml" value="0.218" />
+        <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/round_tune_black_36dp.xml" value="0.231" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/rounded_corners_background.xml" value="0.134" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/rounded_dialog.xml" value="0.3728205128205128" />
         <entry key="..\:/OneDrive/Documentos/DAM2/AndroidProjects/Examen/FamilyLamp/app/src/main/res/drawable/save_24dp.xml" value="0.174" />

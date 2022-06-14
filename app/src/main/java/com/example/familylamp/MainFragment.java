@@ -387,45 +387,6 @@ public class MainFragment extends Fragment {
 
     }
 
-    private int getQuadrant(int x, int y) {
-        if (x < (iv.getWidth() / 2)) {
-            if (y < (iv.getHeight() / 2)) {
-                return 1;
-            } else {
-                return 3;
-            }
-        } else {
-            if (y < (iv.getHeight() / 2)) {
-                return 2;
-            } else {
-                return 4;
-            }
-        }
-    }
-
-    private int[] getQuadrantStartPoint(int quadrant) {
-        int[] startPoint = new int[2];
-        switch (quadrant) {
-            case 1:
-                startPoint[0] = 0;
-                startPoint[1] = 0;
-                break;
-            case 2:
-                startPoint[0] = iv.getWidth() / 2;
-                startPoint[1] = 0;
-                break;
-            case 3:
-                startPoint[0] = 0;
-                startPoint[1] = iv.getHeight() / 2;
-                break;
-            case 4:
-                startPoint[0] = iv.getWidth() / 2;
-                startPoint[1] = iv.getHeight() / 2;
-                break;
-        }
-        return startPoint;
-    }
-
     public void chooseColor(boolean animate) {
         calcBrilloColors();
         int color = Color.rgb(rBrillo, gBrillo, bBrillo);
@@ -459,6 +420,15 @@ public class MainFragment extends Fragment {
     }
 
     public void sendColor() {
+        if (lampAddress != null && !lampAddress.getHostAddress().equals("::1")) {
+            udpSender = new UDPSender(lampAddress, PORT, "Color," + hex);
+            udpSender.start();
+        } else {
+            Log.d("Lamp", getResources().getString(R.string.error_ip_invalid));
+        }
+    }
+
+    public void sendColor(String hex) {
         if (lampAddress != null && !lampAddress.getHostAddress().equals("::1")) {
             udpSender = new UDPSender(lampAddress, PORT, "Color," + hex);
             udpSender.start();
@@ -824,6 +794,7 @@ public class MainFragment extends Fragment {
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.popup_send:
+                            sendColor(colors.get(iterator));
                             return true;
                         case R.id.popup_set:
                             chooseFromHex(colors.get(iterator));

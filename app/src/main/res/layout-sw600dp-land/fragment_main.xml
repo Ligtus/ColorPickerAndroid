@@ -141,7 +141,7 @@
         android:backgroundTint="@color/nulo"
         android:cropToPadding="false"
         android:scaleType="center"
-        android:src="@drawable/bars_36dp"
+        android:src="@drawable/tune_36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
