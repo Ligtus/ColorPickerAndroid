@@ -27,6 +27,7 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
     final boolean vibration;
     final int vibrationTime;
 
+    // Constructor
     public RecientesAdapter(Context context, ArrayList<Recientes> colores, int buttons_per_row) {
         this.context = context;
         this.colores = colores;
@@ -37,6 +38,7 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
         vibrationTime = sharedPreferences.getInt("vibrationTime", 15);
     }
 
+    // Create new viewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,15 +46,22 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
         return new ViewHolder(v, parent.getContext());
     }
 
+    // Bind the viewHolder to the view
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        // Get the reciente
         Recientes reciente = colores.get(position);
+        // Get hex codes for that reciente
         String[] hexCodes = reciente.getHexCodes();
+        // Get buttonListener for the reciente
         holder.buttonListener = reciente.getButtonListener();
+        // Set background color for each button in the reciente
         for (int i = 0; i < buttons_per_row; i++) {
             if (!hexCodes[i].equals("#000000")) {
                 holder.buttons[i].setBackgroundColor(Color.parseColor(hexCodes[i]));
                 int iterator = i;
+
+                // Also set the onClickListener to execute a popUpMenu
                 holder.buttons[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -60,21 +69,26 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
                     }
                 });
             } else {
+                // If the color is black, set the button to default background color
                 holder.buttons[i].setBackgroundColor(context.getResources().getColor(R.color.appBackground));
             }
         }
     }
 
+    // Return number of recientes
     @Override
     public int getItemCount() {
         return colores.size();
     }
 
+    // Viewholder class
     public class ViewHolder extends RecyclerView.ViewHolder {
+        // buttons Array and ButtonListener instance
         final Button[] buttons = new Button[buttons_per_row];
         MainFragment.ButtonListener buttonListener;
         public ViewHolder(View itemView, Context context) {
             super(itemView);
+            // find all buttons inside this viewHolder and get them inside the buttons array
             for (int i = 0; i < buttons_per_row; i++) {
                 buttons[i] = itemView.findViewById(context.getResources().getIdentifier("button_" + (i + 1), "id", context.getPackageName()));
             }
