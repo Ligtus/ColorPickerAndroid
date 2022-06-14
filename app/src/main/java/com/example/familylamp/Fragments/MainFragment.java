@@ -21,7 +21,6 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.Gravity;
@@ -96,12 +95,9 @@ public class MainFragment extends Fragment {
     SQLiteHelper sqLiteHelper;
     SQLiteDatabase colorsDB;
 
-    // UDP Variables
-    //UDPReceiver udpReceiver;
+    // Network Variables
     UDPSender udpSender;
-    //DatagramSocket socket;
     InetAddress lampAddress = null;
-    public Handler handler;
 
 
     public MainFragment() {
@@ -129,6 +125,17 @@ public class MainFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get all views
+        iv = getView().findViewById(R.id.color);
+        colorDialogButton = getView().findViewById(R.id.colorDialogButton);
+        settingsButton = getView().findViewById(R.id.buttonSettings);
+        connectButton = getView().findViewById(R.id.connectButton);
+        muestra = getView().findViewById(R.id.muestra);
+        iv.setDrawingCacheEnabled(true);
+        iv.buildDrawingCache(true);
+        brillo = getView().findViewById(R.id.brillo);
+        brilloValue = getView().findViewById(R.id.brilloValue);
+
         // Load application preferences
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -140,17 +147,6 @@ public class MainFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.error_ip_invalid, Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
-
-        //handler = new Handler();
-
-        /*try {
-            socket = new DatagramSocket(PORT);
-            UDPReceiver udpReceiver = new UDPReceiver(socket, handler, this);
-            udpReceiver.start();
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }*/
-
 
         // Load vibration preferences
         vibration = prefs.getBoolean("vibration", true);
@@ -219,26 +215,18 @@ public class MainFragment extends Fragment {
             }
         });
 
-        iv = getView().findViewById(R.id.color);
-        colorDialogButton = getView().findViewById(R.id.colorDialogButton);
-        settingsButton = getView().findViewById(R.id.buttonSettings);
-        connectButton = getView().findViewById(R.id.connectButton);
-        muestra = getView().findViewById(R.id.muestra);
-        iv.setDrawingCacheEnabled(true);
-        iv.buildDrawingCache(true);
-        brillo = getView().findViewById(R.id.brillo);
-        brilloValue = getView().findViewById(R.id.brilloValue);
-
+        // Set colorDialogButton onClickListener to open color dialog
         Drawable colorDialogImg = colorDialogButton.getDrawable();
         AnimatedVectorDrawable animColorDialog = (AnimatedVectorDrawable) colorDialogImg;
         colorDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 animColorDialog.start();
-                modRGB();
+                colorDialog();
             }
         });
 
+        // Set connection button onClickListener to open lamp connection screen and start animation
         View explosionLamps = getView().findViewById(R.id.btnExplosionLamps);
         Drawable connectImg = connectButton.getDrawable();
         AnimatedVectorDrawable animConnect = (AnimatedVectorDrawable) connectImg;
@@ -277,8 +265,8 @@ public class MainFragment extends Fragment {
             }
         });
 
+        // Set settings button onClickListener to open settings screen and start animation
         View explosionSettings = getView().findViewById(R.id.btnExplosionSettings);
-
         Drawable imgSettings = settingsButton.getDrawable();
         AnimatedVectorDrawable animSettings = (AnimatedVectorDrawable) imgSettings;
         Animation animationSettings = AnimationUtils.loadAnimation(getContext(), R.anim.btn_explosion_anim);
@@ -315,7 +303,9 @@ public class MainFragment extends Fragment {
             }
         });
 
+        // Set color circle image onClickListener
         iv.setOnTouchListener(new View.OnTouchListener() {
+            // If the user touches the image, the color is changed with an animation
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -323,36 +313,31 @@ public class MainFragment extends Fragment {
                     int y = (int) motionEvent.getY();
                     if ((y < view.getHeight()) && (x < view.getWidth()) && (x > 0) && (y > 0)) {
                         bitmap = iv.getDrawingCache();
-                        //log result of bitmap.getcolor
                         int pixel = bitmap.getPixel(x, y);
                         r = Color.red(pixel);
                         g = Color.green(pixel);
                         b = Color.blue(pixel);
-                        //testrgb.setText("cuadrante: " + getQuadrant(x, y) + " startCoords: " + getQuadrantStartPoint(getQuadrant(x, y))[0] + ", " + getQuadrantStartPoint(getQuadrant(x, y))[1]);
-
-                        //playing = true;
                         chooseColor(true);
 
                     }
-
-
                     return true;
+
+                    // If the user moves the finger, the color is changed accordingly
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
                     int x = (int) motionEvent.getX();
                     int y = (int) motionEvent.getY();
                     if ((y < view.getHeight()) && (x < view.getWidth()) && (x > 0) && (y > 0)) {
                         bitmap = iv.getDrawingCache();
-                        //log result of bitmap.getcolor
                         int pixel = bitmap.getPixel(x, y);
                         r = Color.red(pixel);
                         g = Color.green(pixel);
                         b = Color.blue(pixel);
-                        //testrgb.setText("cuadrante: " + getQuadrant(x, y) + " startCoords: " + getQuadrantStartPoint(getQuadrant(x, y))[0] + ", " + getQuadrantStartPoint(getQuadrant(x, y))[1]);
-
                         chooseColor(false);
 
                     }
                     return true;
+
+                    // If the user releases the finger and autoSend is enabled, the color is sent to the lamp
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     if (autoSend) {
                         sendColor();
@@ -363,7 +348,9 @@ public class MainFragment extends Fragment {
             }
         });
 
+        // Set brightness seekbar onSeekBarChangeListener
         brillo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            // If the user changes the seekbar, the brightness is changed accordingly and the new color is shown
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
@@ -379,77 +366,103 @@ public class MainFragment extends Fragment {
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
 
+            // When the user releases the seekbar, the color is sent to the lamp if autoSend is enabled
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                if (autoSend) {
+                    sendColor();
+                }
             }
         });
 
+        // If colors array is not empty, show the first color when the app is opened
         if (colors.size() >= 1) {
             chooseFromHex(colors.get(0));
         }
-
-
     }
 
+    // Method to change the color sample
     public void chooseColor(boolean animate) {
         calcBrilloColors();
+        // Get the color from the RGB values
         int color = Color.rgb(rBrillo, gBrillo, bBrillo);
 
+        // Get the hex value using the color
         hex = String.format("#%06X", (0xFFFFFF & color));
 
+        // If the color is not black...
         if (!hex.equals("#000000")) {
             if (animate) {
+                // If animate is true, the color is changed with an animation
                 animMuestraColor();
             } else {
+                // Else, the color is changed without animation
                 setMuestraColor();
                 oldR = rBrillo;
                 oldG = gBrillo;
                 oldB = bBrillo;
             }
         } else {
+            // If the color is black, the color is set to default value
             clearMuestraColor();
         }
     }
 
+    // Method to change the color sample from a hex value
     public void chooseFromHex(String hexReciente) {
+        // Set global hex value
         hex = hexReciente;
+
+        // Get the RGB values from the hex value
         int px = Color.parseColor(hex);
         rBrillo = (int) (Color.red(px));
         gBrillo = (int) (Color.green(px));
         bBrillo = (int) (Color.blue(px));
 
+        // Get the brightness value from the RGB values
         calcBrillo(rBrillo, gBrillo, bBrillo);
 
+        // Set the sample color with an animation
         animMuestraColor();
     }
 
+    // Method to send the color value to the lamp
     public void sendColor() {
         if (lampAddress != null && !lampAddress.getHostAddress().equals("::1")) {
             udpSender = new UDPSender(lampAddress, PORT, "Color," + hex);
             udpSender.start();
         } else {
+            // If the lamp address is null or loopback, the color is not sent
             Log.d("Lamp", getResources().getString(R.string.error_ip_invalid));
         }
     }
 
+    // Method to send the color value to the lamp, passing the hex value as parameter
     public void sendColor(String hex) {
         if (lampAddress != null && !lampAddress.getHostAddress().equals("::1")) {
             udpSender = new UDPSender(lampAddress, PORT, "Color," + hex);
             udpSender.start();
         } else {
+            // If the lamp address is null or loopback, the color is not sent
             Log.d("Lamp", getResources().getString(R.string.error_ip_invalid));
         }
     }
 
+    // Method to update colors array with the new color
     public void updateRecientes(View view, RecyclerView.Adapter adapter, int index) {
+        // If the color is not black...
         if (!hex.equals("#000000")) {
+            // If the colors array is empty, add the new color
             if (colors.size() == 0) {
                 colors.add(hex);
                 cargarRecientes();
-                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged(); // Notify RecyclerView of data changes
                 return;
             }
+
+            // If the color is not already in the array...
             if (!colors.contains(hex)) {
+                // If the edit mode is enabled, the color with the index is replaced with the new color
                 if (editingIndex != -1) {
                     colors.set(editingIndex, hex);
                     editColor(editingIndex, hex);
@@ -457,6 +470,7 @@ public class MainFragment extends Fragment {
                     Toast.makeText(getContext(), R.string.color_edited, Toast.LENGTH_SHORT).show();
                     return;
                 }
+                // If the colors array is full and overwrite is enabled, remove the first color
                 if (colors.size() < (BUTTONS_PER_ROW * nColors) || overwrite) {
                     colors.add(index, hex);
                     if (colors.size() > (BUTTONS_PER_ROW * nColors)) {
@@ -465,6 +479,7 @@ public class MainFragment extends Fragment {
                     cargarRecientes();
                     adapter.notifyDataSetChanged();
                 } else {
+                    // If the colors array is full and overwrite is disabled, vibrate and notify the user
                     if (vibration) {
                         vibrator.vibrate(vibrationTime);
                     }
@@ -472,6 +487,7 @@ public class MainFragment extends Fragment {
                     return;
                 }
             } else {
+                // If the color is already in the array, vibrate and notify the user
                 if (vibration) {
                     vibrator.vibrate(vibrationTime);
                 }
@@ -479,6 +495,7 @@ public class MainFragment extends Fragment {
                 return;
             }
         } else {
+            // If the color is black, vibrate and notify the user
             if (vibration) {
                 vibrator.vibrate(vibrationTime);
             }
@@ -486,15 +503,18 @@ public class MainFragment extends Fragment {
         }
     }
 
+    // Method to overwrite a color based on the index passed as parameter
     public void overwrite(int index) {
+        // If the colors array size is greater than the index...
         if (colors.size() > index) {
-            colors.set(index, hex);
+            colors.set(index, hex); // Set the color at the index to the new color
             cargarRecientes();
-            adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged(); // Notify RecyclerView of data changes
             Toast.makeText(getContext(), R.string.color_overwritten, Toast.LENGTH_SHORT).show();
         }
     }
 
+    // Method to get the higher of three values passed as parameters
     public int getHigher(int r, int g, int b) {
         int higher = 0;
         if (r > g) {
@@ -513,9 +533,13 @@ public class MainFragment extends Fragment {
         return higher;
     }
 
+    // Method to calculate brightness value from RGB values passed as parameters
     public void calcBrillo(int r, int g, int b) {
+        // Get the higher of the three values
         int higher = getHigher(r, g, b);
+        // Calculate the brightness value and round it to the nearest integer
         double brilloValue = ((double)higher / (double)(255)) * 100;
+        // Set the brightness value with an animation
         ValueAnimator valAnim = ValueAnimator.ofInt(brillo.getProgress(), (int)brilloValue);
         valAnim.setDuration(250);
         valAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -528,6 +552,7 @@ public class MainFragment extends Fragment {
         valAnim.start();
     }
 
+    // Method to calculate final RGB values from the brightness value and the raw RGB values
     public void calcBrilloColors() {
         float brilloColor = Float.parseFloat(brilloValue.getText().toString()) / 100;
         rBrillo = (int) (r * brilloColor);
@@ -535,6 +560,7 @@ public class MainFragment extends Fragment {
         bBrillo = (int) (b * brilloColor);
     }
 
+    // Method to calculate raw RGB values from the brightness value and the final RGB values
     public void calcColorsFromBrillo() {
         float brilloColor = Float.parseFloat(brilloValue.getText().toString()) / 100;
         r = (int) (rBrillo / brilloColor);
@@ -542,6 +568,11 @@ public class MainFragment extends Fragment {
         b = (int) (bBrillo / brilloColor);
     }
 
+
+    /**
+     * Method to calculate color in the colorDialog, just as ChooseColor
+     * @see #chooseColor(boolean) ()
+     */
     public void chooseColorDialog(View colorDialog, TextView valuesDialog) {
         int color = Color.rgb(rBrillo, gBrillo, bBrillo);
 
@@ -555,20 +586,27 @@ public class MainFragment extends Fragment {
             clearMuestraColor();
             colorDialog.setBackgroundColor(getResources().getColor(R.color.nulo));
         }
+        // If showCodes is enabled, show the RGB and hex values
         if (showCodes) {
             valuesDialog.setText("RGB\n" + rBrillo + ", " + gBrillo + ", " + bBrillo + "\nHEX\n" + hex);
         }
     }
 
-    public void modRGB() {
+    // Method to invoke the color picker dialog
+    public void colorDialog() {
         final Dialog dialog = new Dialog(this.getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.rgb_dialog);
+        // Set drawable background, to get the rounded corners
         dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_background, null));
 
+        // Get all the views from the dialog
         TextView valuesDialog = dialog.findViewById(R.id.valuesDialog);
         View colorDialog = dialog.findViewById(R.id.colorDialog);
+        Button confirm = dialog.findViewById(R.id.cancelDialog);
+
+        // Get R seekBar and set its progress to the current R value
         SeekBar sbR = dialog.findViewById(R.id.seekBar_0);
         sbR.setProgress(rBrillo);
         sbR.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -591,6 +629,7 @@ public class MainFragment extends Fragment {
             }
         });
 
+        // Get G seekBar and set its progress to the current G value
         SeekBar sbG = dialog.findViewById(R.id.seekBar_1);
         sbG.setProgress(gBrillo);
         sbG.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -613,6 +652,7 @@ public class MainFragment extends Fragment {
             }
         });
 
+        // Get B seekBar and set its progress to the current B value
         SeekBar sbB = dialog.findViewById(R.id.seekBar_2);
         sbB.setProgress(bBrillo);
         sbB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -635,27 +675,31 @@ public class MainFragment extends Fragment {
             }
         });
 
+        // Calculate raw RGB values from the brightness value and the final RGB values
         calcColorsFromBrillo();
 
+        // Show the color in the colorDialog
         chooseColorDialog(colorDialog, valuesDialog);
 
-        Button confirm = dialog.findViewById(R.id.cancelDialog);
-
+        // Set confirm button listener
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateRecientes(getView(), adapter, 0);
+                // If autoSend is enabled, send the color
                 if (autoSend) {
                     sendColor();
                 }
+                // Close the dialog
                 dialog.dismiss();
             }
         });
 
+        // Show the dialog
         dialog.show();
-
     }
 
+    // Method to load the recent colors into the recyclerView
     public void cargarRecientes() {
         /*
          * If the number of recientes in preferences is not equal to the number of saved colors,
@@ -673,16 +717,19 @@ public class MainFragment extends Fragment {
                 }
             }
 
-            // Create a new reciente
+            // Create a new reciente and add it to the list
             Recientes reciente = new Recientes(hexCodes, new ButtonListener());
             recientesList.add(reciente);
         }
 
     }
 
+    // Method to save the recent colors into the SQLite database
     public void guardarRecientes() {
+        // Delete all the colors from the database
         colorsDB.execSQL("DELETE FROM " + sqLiteHelper.getTableName());
 
+        // Insert the colors into the database
         for(String hex : colors) {
             ContentValues values = new ContentValues();
             values.put("hexcode", hex);
@@ -690,35 +737,42 @@ public class MainFragment extends Fragment {
         }
     }
 
+    // Method to clear the color from the sample
     private void clearMuestraColor() {
         muestra.setText("");
         muestra.setBackgroundColor(getResources().getColor(R.color.nulo));
     }
 
+    // Method to edit a color in the recyclerView
     private void editColor(int index, String hex) {
         Recientes reciente = recientesList.get(index/BUTTONS_PER_ROW);
         String[] hexCodes = reciente.getHexCodes();
         hexCodes[index%BUTTONS_PER_ROW] = hex;
         reciente.setHexCodes(hexCodes);
         recientesList.set(index/BUTTONS_PER_ROW, reciente);
-        adapter.notifyItemChanged(index/BUTTONS_PER_ROW);
+        adapter.notifyItemChanged(index/BUTTONS_PER_ROW); // Notify the adapter that the item has changed
     }
 
+    // Method to set the color of the sample
     private void setMuestraColor() {
+        // If showCodes is enabled, set the text to the hex code
         if (showCodes) {
             muestra.setText("RGB\n" + rBrillo + ", " + gBrillo + ", " + bBrillo + "\nHEX\n" + hex);
         }
 
-        // Also set the background color of a button in editing mode
+        // Also set the background color the color that is in editing mode
         if (editingIndex != -1) {
             editColor(editingIndex, hex);
         }
 
         muestra.setBackgroundColor(Color.rgb(rBrillo, gBrillo, bBrillo));
+        // Also set the text color in case showCodes is enabled
         chooseTextColor();
     }
 
+    // Method to animate the transition between the colors
     private void animMuestraColor() {
+        // Calculate the color to animate to
         int endRGB = Color.argb(255, rBrillo, gBrillo, bBrillo);
         ValueAnimator valAnimRGB = ValueAnimator.ofArgb(Color.argb(255, oldR, oldG, oldB), endRGB);
         oldR = rBrillo;
@@ -738,10 +792,12 @@ public class MainFragment extends Fragment {
         valAnimRGB.start();
     }
 
+    // Method that returns if a value is in between the min and max values
     private boolean isBetween(double value, double min, double max) {
         return value >= min && value <= max; // true if value is between min and max
     }
 
+    // Method to calculate the RGB values for the text so it always stays visible
     private int calcValue(int value, double brillo) {
         int valueTmp;
         if (isBetween(brillo, 0.45, 1)) {
@@ -759,23 +815,24 @@ public class MainFragment extends Fragment {
         }
     }
 
+    // Method that sets the text color of the sample
     private void chooseTextColor(){
         double tmpR, tmpG, tmpB;
         double brillo = Double.parseDouble(brilloValue.getText().toString()) / 100;
+        // Get temporary RGB values from the method described above
         tmpR = calcValue(r, brillo);
         tmpG = calcValue(g, brillo);
         tmpB = calcValue(b, brillo);
         muestra.setTextColor(Color.rgb((int)tmpR, (int)tmpG, (int)tmpB));
     }
 
+    // Method to delete a color from the recyclerView
     private void deleteColor(int index) {
         colors.remove(index);
         cargarRecientes();
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged(); // Notify the adapter that the entire list has changed, since the number of items has changed
         Toast.makeText(getContext(), R.string.color_deleted, Toast.LENGTH_SHORT).show();
     }
-
-
 
     /*
      * An inner class to handle the clicks on the recientes.
@@ -783,17 +840,26 @@ public class MainFragment extends Fragment {
      * then the Adapter binds its execute method to the onClickListener.
      */
     public class ButtonListener {
+        // Default constructor
         ButtonListener() {};
 
+        // Method to handle the click on a color
         public void execute(int iterator, Button btn) {
+            // Call ConfirmManager to create a confirmation dialog
             ConfirmManager cm = new ConfirmManager(getContext());
+
+            // Create a new PopupMenu
             PopupMenu popup = new PopupMenu(getActivity(), btn, Gravity.CENTER, 0, R.style.PopUpMenuCustom);
+            // Set ForceShowIcon to true to show the icons of the options
             popup.setForceShowIcon(true);
             popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+            // If editing mode is enabled, add the option to cancel edition
             if (editingIndex != -1) {
                 popup.getMenu().findItem(R.id.popup_edit).setVisible(false);
                 popup.getMenu().findItem(R.id.popup_cancel_edit).setVisible(true);
             }
+            // Set popup menu onClickListener
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
@@ -858,24 +924,26 @@ public class MainFragment extends Fragment {
                 }
             });
 
+            // When the popup is shown, vibrate if the vibration is enabled
             if (vibration) {
                 vibrator.vibrate(vibrationTime);
             }
-
+            // Show the popup
             popup.show();
         }
     }
 
+    // On stop method to save the colors
     @Override
     public void onStop() {
         super.onStop();
         guardarRecientes();
     }
 
+    // On destroy method to close the database
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //socket.close();
 
         if (colorsDB != null) {
             colorsDB.close();
@@ -885,17 +953,12 @@ public class MainFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        clearMuestraColor();
-    }
-
+    // Method to navigate to the settings fragment
     public void settings() {
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_nav_settings);
     }
 
+    // Method to navigate to the lamp fragment
     public void connect() {
         NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_to_lampFragment);
     }
