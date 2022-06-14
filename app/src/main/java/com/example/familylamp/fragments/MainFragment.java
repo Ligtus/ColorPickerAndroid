@@ -1,4 +1,4 @@
-package com.example.familylamp.Fragments;
+package com.example.familylamp.fragments;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -42,10 +42,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.familylamp.ConfirmManager;
-import com.example.familylamp.NetworkComms.UDPSender;
+import com.example.familylamp.networkComms.UDPSender;
 import com.example.familylamp.R;
-import com.example.familylamp.Recientes.Recientes;
-import com.example.familylamp.Recientes.RecientesAdapter;
+import com.example.familylamp.recientes.Recientes;
+import com.example.familylamp.recientes.RecientesAdapter;
 import com.example.familylamp.SQLiteHelper;
 
 import java.net.InetAddress;

@@ -1,26 +1,26 @@
-package com.example.familylamp.Lamps;
+package com.example.familylamp.lamps;
 
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.familylamp.Fragments.LampFragment;
+import com.example.familylamp.fragments.LampFragment;
 import com.example.familylamp.R;
 
 import java.util.ArrayList;
 
 public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder> {
     // List of lamps
-    ArrayList<Lamp> lamps;
+    final ArrayList<Lamp> lamps;
     // LampFragment reference
-    LampFragment lampFragment;
+    final LampFragment lampFragment;
 
     // Constructor
     public LampAdapter(ArrayList<Lamp> lamps, LampFragment lampFragment) {
@@ -29,6 +29,7 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
     }
 
     // Create a new lamp view holder
+    @NonNull
     @Override
     public LampViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lamp, parent, false);
@@ -54,7 +55,8 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
 
     // Lamp view holder
     public class LampViewHolder extends RecyclerView.ViewHolder {
-        TextView lampName, lampAddress;
+        final TextView lampName;
+        TextView lampAddress;
         public LampViewHolder(View itemView) {
             super(itemView);
             // Set onclick listener for the lamp

@@ -1,16 +1,18 @@
-package com.example.familylamp.Recientes;
+package com.example.familylamp.recientes;
 
-import com.example.familylamp.Fragments.MainFragment;
+import com.example.familylamp.fragments.MainFragment;
 
 public class Recientes {
     private String[] hexCodes;
     private MainFragment.ButtonListener buttonListener;
 
+    // Constructor
     public Recientes(String[] hexCodes, MainFragment.ButtonListener buttonListener) {
         this.hexCodes = hexCodes;
         this.buttonListener = buttonListener;
     }
 
+    // Getters and setters
     public String[] getHexCodes() {
         return hexCodes;
     }

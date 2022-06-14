@@ -1,4 +1,4 @@
-package com.example.familylamp.Lamps;
+package com.example.familylamp.lamps;
 
 import java.net.InetAddress;
 

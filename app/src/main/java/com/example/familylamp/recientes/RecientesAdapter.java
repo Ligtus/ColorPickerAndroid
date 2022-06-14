@@ -1,4 +1,4 @@
-package com.example.familylamp.Recientes;
+package com.example.familylamp.recientes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,21 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.familylamp.Fragments.MainFragment;
+import com.example.familylamp.fragments.MainFragment;
 import com.example.familylamp.R;
 
 import java.util.ArrayList;
 
 public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.ViewHolder> {
-    Vibrator vibrator;
-    Context context;
-    ArrayList<Recientes> colores;
-    int buttons_per_row;
-    SharedPreferences sharedPreferences;
-    boolean vibration;
-    int vibrationTime;
+    final Vibrator vibrator;
+    final Context context;
+    final ArrayList<Recientes> colores;
+    final int buttons_per_row;
+    final SharedPreferences sharedPreferences;
+    final boolean vibration;
+    final int vibrationTime;
 
     public RecientesAdapter(Context context, ArrayList<Recientes> colores, int buttons_per_row) {
         this.context = context;
@@ -36,6 +37,7 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
         vibrationTime = sharedPreferences.getInt("vibrationTime", 15);
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recientes, parent, false);
@@ -48,7 +50,7 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
         String[] hexCodes = reciente.getHexCodes();
         holder.buttonListener = reciente.getButtonListener();
         for (int i = 0; i < buttons_per_row; i++) {
-            if (hexCodes[i] != "#000000") {
+            if (!hexCodes[i].equals("#000000")) {
                 holder.buttons[i].setBackgroundColor(Color.parseColor(hexCodes[i]));
                 int iterator = i;
                 holder.buttons[i].setOnClickListener(new View.OnClickListener() {
@@ -69,7 +71,7 @@ public class RecientesAdapter extends RecyclerView.Adapter<RecientesAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        Button[] buttons = new Button[buttons_per_row];
+        final Button[] buttons = new Button[buttons_per_row];
         MainFragment.ButtonListener buttonListener;
         public ViewHolder(View itemView, Context context) {
             super(itemView);

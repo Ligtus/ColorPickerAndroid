@@ -1,4 +1,4 @@
-package com.example.familylamp.Fragments;
+package com.example.familylamp.fragments;
 
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -30,7 +31,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         // Set onPreferenceClickListener for delete_all preference
         delete_all.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference) {
+            public boolean onPreferenceClick(@NonNull Preference preference) {
                 // Create confirm dialog for deleting all colors
                 ConfirmManager cm = new ConfirmManager(getContext());
                 cm.confirmDialog(
@@ -54,7 +55,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         // Set onPreferenceChangeListener for vibration preference
         vibrationSeekBar.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
                 // On change of the seekbar, vibrate for the new value so the user can tell what the new value is
                 vibrator = (Vibrator) getContext().getSystemService(getContext().VIBRATOR_SERVICE);
                 vibrator.vibrate((int)newValue);

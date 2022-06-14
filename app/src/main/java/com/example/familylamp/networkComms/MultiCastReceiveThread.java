@@ -1,10 +1,10 @@
-package com.example.familylamp.NetworkComms;
+package com.example.familylamp.networkComms;
 
 import android.os.Handler;
 import android.util.Log;
 
-import com.example.familylamp.Lamps.Lamp;
-import com.example.familylamp.Fragments.LampFragment;
+import com.example.familylamp.lamps.Lamp;
+import com.example.familylamp.fragments.LampFragment;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;

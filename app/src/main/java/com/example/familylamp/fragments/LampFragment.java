@@ -1,11 +1,11 @@
-package com.example.familylamp.Fragments;
+package com.example.familylamp.fragments;
 
 import android.app.Dialog;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,10 +21,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.familylamp.Lamps.Lamp;
-import com.example.familylamp.Lamps.LampAdapter;
-import com.example.familylamp.Lamps.LampAnimator;
-import com.example.familylamp.NetworkComms.MultiCastReceiveThread;
+import com.example.familylamp.lamps.Lamp;
+import com.example.familylamp.lamps.LampAdapter;
+import com.example.familylamp.lamps.LampAnimator;
+import com.example.familylamp.networkComms.MultiCastReceiveThread;
 import com.example.familylamp.R;
 
 import java.net.InetAddress;
@@ -63,7 +63,7 @@ public class LampFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // Get loading animation and start it
