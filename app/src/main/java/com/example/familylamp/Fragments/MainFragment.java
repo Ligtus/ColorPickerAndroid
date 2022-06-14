@@ -81,7 +81,7 @@ public class MainFragment extends Fragment {
     SeekBar brillo;
 
     // Saved color variables and buttons
-    static final ArrayList<String> colors = new ArrayList<String>();
+    static final ArrayList<String> colors = new ArrayList<>();
 
     // Settings variables
     SharedPreferences prefs;
@@ -101,10 +101,6 @@ public class MainFragment extends Fragment {
 
 
     public MainFragment() {
-    }
-
-    public static MainFragment newInstance() {
-        return new MainFragment();
     }
 
     @Override
@@ -170,18 +166,14 @@ public class MainFragment extends Fragment {
         sqLiteHelper = new SQLiteHelper(getActivity());
         colorsDB = sqLiteHelper.getWritableDatabase();
 
-        Cursor cursor = colorsDB.rawQuery("SELECT * FROM " + sqLiteHelper.getTableName(), null);
-
-        try {
+        try (Cursor cursor = colorsDB.rawQuery("SELECT * FROM " + sqLiteHelper.getTableName(), null)) {
             colors.clear(); // Clear the colors array in case it has elements
 
-            while(cursor.moveToNext() && (cursor.getPosition() < BUTTONS_PER_ROW * nColors)) {
+            while (cursor.moveToNext() && (cursor.getPosition() < BUTTONS_PER_ROW * nColors)) {
                 colors.add(cursor.getString(1));
             }
-        } finally {
-            // Close the cursor
-            cursor.close();
         }
+        // Close the cursor
 
         // Bind the recycler view to the adapter
         adapter = new RecientesAdapter(getContext(), recientesList, BUTTONS_PER_ROW);
