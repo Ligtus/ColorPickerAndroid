@@ -24,13 +24,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        // Get delete_all preference
         Preference delete_all = findPreference("delete_all");
 
-
-
+        // Set onPreferenceClickListener for delete_all preference
         delete_all.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                // Create confirm dialog for deleting all colors
                 ConfirmManager cm = new ConfirmManager(getContext());
                 cm.confirmDialog(
                         getResources().getString(R.string.delete_all_dialog_title),
@@ -47,11 +48,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         });
 
+        // Get vibration preference
         Preference vibrationSeekBar = findPreference("vibrationTime");
 
+        // Set onPreferenceChangeListener for vibration preference
         vibrationSeekBar.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
+                // On change of the seekbar, vibrate for the new value so the user can tell what the new value is
                 vibrator = (Vibrator) getContext().getSystemService(getContext().VIBRATOR_SERVICE);
                 vibrator.vibrate((int)newValue);
                 return true;
@@ -59,14 +63,19 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
     }
 
+    // Method to delete all colors from SQLite database
     private void deleteAll() {
 
         SQLiteHelper sqLiteHelper = new SQLiteHelper(getActivity());
         SQLiteDatabase colorsDB = sqLiteHelper.getWritableDatabase();
 
+        // Simple DELETE FROM + table name to delete all rows
         colorsDB.execSQL("DELETE FROM " + sqLiteHelper.getTableName());
 
+        // Also clear the colors ArrayList in the MainActivity
         MainFragment.colors.clear();
+
+        // Notify the user that all colors have been deleted
         Toast.makeText(getContext(), R.string.all_colors_deleted, Toast.LENGTH_SHORT).show();
     }
 }
