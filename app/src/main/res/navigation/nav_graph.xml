@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.familylamp.Fragments.MainFragment"
+        android:name="com.example.familylamp.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.familylamp.Fragments.SettingsFragment"
+        android:name="com.example.familylamp.fragments.SettingsFragment"
         android:label="SettingsFragment" >
         <action
             android:id="@+id/action_settingsFragment_to_mainFragment"
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/lampFragment"
-        android:name="com.example.familylamp.Fragments.LampFragment"
+        android:name="com.example.familylamp.fragments.LampFragment"
         android:label="fragment_lamp"
         tools:layout="@layout/fragment_lamp" >
         <action
