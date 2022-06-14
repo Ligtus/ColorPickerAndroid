@@ -1,4 +1,4 @@
-package com.example.familylamp;
+package com.example.familylamp.Recientes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.familylamp.Fragments.MainFragment;
+import com.example.familylamp.R;
 
 import java.util.ArrayList;
 

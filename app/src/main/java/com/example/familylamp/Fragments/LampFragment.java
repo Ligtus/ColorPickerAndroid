@@ -1,10 +1,9 @@
-package com.example.familylamp;
+package com.example.familylamp.Fragments;
 
 import android.app.Dialog;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.core.content.res.ResourcesCompat;
@@ -14,26 +13,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+import com.example.familylamp.Lamps.Lamp;
+import com.example.familylamp.Lamps.LampAdapter;
+import com.example.familylamp.Lamps.LampAnimator;
+import com.example.familylamp.NetworkComms.MultiCastReceiveThread;
+import com.example.familylamp.R;
+
 import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Formatter;
 
 public class LampFragment extends Fragment {
 

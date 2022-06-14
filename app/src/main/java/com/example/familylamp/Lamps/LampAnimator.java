@@ -1,10 +1,12 @@
-package com.example.familylamp;
+package com.example.familylamp.Lamps;
 
 import android.content.res.Configuration;
 import android.view.animation.AnimationUtils;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.familylamp.R;
 
 public class LampAnimator extends DefaultItemAnimator {
 

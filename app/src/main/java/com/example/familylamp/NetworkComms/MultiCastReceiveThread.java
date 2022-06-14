@@ -1,10 +1,11 @@
-package com.example.familylamp;
+package com.example.familylamp.NetworkComms;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
-import java.io.IOException;
+import com.example.familylamp.Lamps.Lamp;
+import com.example.familylamp.Fragments.LampFragment;
+
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;

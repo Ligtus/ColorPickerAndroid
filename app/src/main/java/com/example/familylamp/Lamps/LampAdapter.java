@@ -1,8 +1,6 @@
-package com.example.familylamp;
+package com.example.familylamp.Lamps;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +11,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import com.example.familylamp.Fragments.LampFragment;
+import com.example.familylamp.R;
+
 import java.util.ArrayList;
 
 public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder> {

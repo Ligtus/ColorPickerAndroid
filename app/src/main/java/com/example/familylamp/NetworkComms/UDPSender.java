@@ -1,4 +1,4 @@
-package com.example.familylamp;
+package com.example.familylamp.NetworkComms;
 
 import android.util.Log;
 

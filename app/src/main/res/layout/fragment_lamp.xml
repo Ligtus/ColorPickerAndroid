@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LampFragment">
+    tools:context=".Fragments.LampFragment">
 
     <!-- Note that FAB are using app:tint=@null to fix a bug that
          makes them not change its icon color with android's theme -->

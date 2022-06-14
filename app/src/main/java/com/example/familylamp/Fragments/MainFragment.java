@@ -1,4 +1,4 @@
-package com.example.familylamp;
+package com.example.familylamp.Fragments;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -41,10 +41,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+import com.example.familylamp.ConfirmManager;
+import com.example.familylamp.NetworkComms.UDPSender;
+import com.example.familylamp.R;
+import com.example.familylamp.Recientes.Recientes;
+import com.example.familylamp.Recientes.RecientesAdapter;
+import com.example.familylamp.SQLiteHelper;
+
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 

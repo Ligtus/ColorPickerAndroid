@@ -1,4 +1,4 @@
-package com.example.familylamp;
+package com.example.familylamp.Fragments;
 
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +9,10 @@ import android.widget.Toast;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+
+import com.example.familylamp.ConfirmManager;
+import com.example.familylamp.R;
+import com.example.familylamp.SQLiteHelper;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

@@ -1,4 +1,4 @@
-package com.example.familylamp;
+package com.example.familylamp.NetworkComms;
 
 import android.os.Handler;
 import android.os.Looper;

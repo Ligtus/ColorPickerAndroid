@@ -1,4 +1,6 @@
-package com.example.familylamp;
+package com.example.familylamp.Recientes;
+
+import com.example.familylamp.Fragments.MainFragment;
 
 public class Recientes {
     private String[] hexCodes;

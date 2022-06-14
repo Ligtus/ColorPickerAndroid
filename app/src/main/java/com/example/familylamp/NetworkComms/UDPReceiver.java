@@ -1,7 +1,8 @@
-package com.example.familylamp;
+package com.example.familylamp.NetworkComms;
 
 import android.os.Handler;
-import android.util.Log;
+
+import com.example.familylamp.Fragments.MainFragment;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
