@@ -1,4 +1,4 @@
-package com.example.familylamp.lamps;
+package com.example.colorpicker.lamps;
 
 import android.content.res.Configuration;
 import android.view.animation.AnimationUtils;
@@ -6,7 +6,7 @@ import android.view.animation.AnimationUtils;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.familylamp.R;
+import com.example.colorpicker.R;
 
 /**
  * @author LigtusEnd

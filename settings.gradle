@@ -7,5 +7,5 @@ dependencyResolutionManagement {
     }
 
 }
-rootProject.name = "FamilyLamp"
+rootProject.name = "ColorPicker"
 include ':app'

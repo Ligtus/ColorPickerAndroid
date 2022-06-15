@@ -1,4 +1,4 @@
-package com.example.familylamp.networkComms;
+package com.example.colorpicker.networkComms;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

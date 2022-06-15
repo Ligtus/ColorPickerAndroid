@@ -1,10 +1,10 @@
-package com.example.familylamp.networkComms;
+package com.example.colorpicker.networkComms;
 
 import android.os.Handler;
 import android.util.Log;
 
-import com.example.familylamp.lamps.Lamp;
-import com.example.familylamp.fragments.LampFragment;
+import com.example.colorpicker.lamps.Lamp;
+import com.example.colorpicker.fragments.LampFragment;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;

@@ -1,4 +1,4 @@
-package com.example.familylamp.fragments;
+package com.example.colorpicker.fragments;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -41,12 +41,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.familylamp.ConfirmManager;
-import com.example.familylamp.networkComms.UDPSender;
-import com.example.familylamp.R;
-import com.example.familylamp.recientes.Recientes;
-import com.example.familylamp.recientes.RecientesAdapter;
-import com.example.familylamp.SQLiteHelper;
+import com.example.colorpicker.ConfirmManager;
+import com.example.colorpicker.networkComms.UDPSender;
+import com.example.colorpicker.R;
+import com.example.colorpicker.recientes.Recientes;
+import com.example.colorpicker.recientes.RecientesAdapter;
+import com.example.colorpicker.SQLiteHelper;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

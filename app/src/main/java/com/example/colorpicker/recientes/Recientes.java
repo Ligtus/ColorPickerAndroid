@@ -1,6 +1,6 @@
-package com.example.familylamp.recientes;
+package com.example.colorpicker.recientes;
 
-import com.example.familylamp.fragments.MainFragment;
+import com.example.colorpicker.fragments.MainFragment;
 
 public class Recientes {
     private String[] hexCodes;

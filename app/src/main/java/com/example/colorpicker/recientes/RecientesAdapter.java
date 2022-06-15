@@ -1,4 +1,4 @@
-package com.example.familylamp.recientes;
+package com.example.colorpicker.recientes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,8 +13,8 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.familylamp.fragments.MainFragment;
-import com.example.familylamp.R;
+import com.example.colorpicker.fragments.MainFragment;
+import com.example.colorpicker.R;
 
 import java.util.ArrayList;
 

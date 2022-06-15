@@ -1,4 +1,4 @@
-package com.example.familylamp.fragments;
+package com.example.colorpicker.fragments;
 
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,9 +11,9 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-import com.example.familylamp.ConfirmManager;
-import com.example.familylamp.R;
-import com.example.familylamp.SQLiteHelper;
+import com.example.colorpicker.ConfirmManager;
+import com.example.colorpicker.R;
+import com.example.colorpicker.SQLiteHelper;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

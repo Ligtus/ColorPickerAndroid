@@ -1,4 +1,4 @@
-package com.example.familylamp.lamps;
+package com.example.colorpicker.lamps;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +11,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.familylamp.fragments.LampFragment;
-import com.example.familylamp.R;
+import com.example.colorpicker.fragments.LampFragment;
+import com.example.colorpicker.R;
 
 import java.util.ArrayList;
 

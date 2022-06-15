@@ -1,4 +1,4 @@
-package com.example.familylamp.fragments;
+package com.example.colorpicker.fragments;
 
 import android.app.Dialog;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -21,11 +21,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.familylamp.lamps.Lamp;
-import com.example.familylamp.lamps.LampAdapter;
-import com.example.familylamp.lamps.LampAnimator;
-import com.example.familylamp.networkComms.MultiCastReceiveThread;
-import com.example.familylamp.R;
+import com.example.colorpicker.lamps.Lamp;
+import com.example.colorpicker.lamps.LampAdapter;
+import com.example.colorpicker.lamps.LampAnimator;
+import com.example.colorpicker.networkComms.MultiCastReceiveThread;
+import com.example.colorpicker.R;
 
 import java.net.InetAddress;
 import java.util.ArrayList;

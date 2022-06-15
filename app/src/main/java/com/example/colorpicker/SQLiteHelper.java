@@ -1,4 +1,4 @@
-package com.example.familylamp;
+package com.example.colorpicker;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
