@@ -74,7 +74,8 @@ public class MainFragment extends Fragment {
     int rBrillo = 0, gBrillo = 0, bBrillo = 0;
     int r=0, g=0, b=0;
     String hex = "#000000", hexUnedit;
-    int editingIndex = -1;
+    int editingIndex = -1, lastMillis = 0;
+    final int interval = 150;
 
     // Brillo variables and views
     TextView brilloValue;
@@ -325,6 +326,13 @@ public class MainFragment extends Fragment {
                         b = Color.blue(pixel);
                         chooseColor(false);
 
+                        int millis = (int) (System.currentTimeMillis());
+
+                        if (autoSend && (millis - lastMillis > interval)) {
+                            lastMillis = millis;
+                            sendColor();
+                        }
+
                     }
                     return true;
 
@@ -350,6 +358,13 @@ public class MainFragment extends Fragment {
                     if (!hex.equals("#000000")) {
                         chooseColor(true);
                     }
+                }
+
+                int millis = (int) (System.currentTimeMillis());
+
+                if (autoSend && (millis - lastMillis > interval)) {
+                    lastMillis = millis;
+                    sendColor();
                 }
             }
 
