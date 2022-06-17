@@ -8,32 +8,38 @@
             android:entries="@array/nRecientes"
             android:entryValues="@array/nRecientes_values"
             android:key="nColors"
-            android:title="@string/recientes_settings_title" />
+            android:summary="%s"
+            android:title="@string/recientes_settings_title"
+            app:icon="@drawable/tag_36dp" />
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="showCodes"
-            android:title="@string/color_codes_settings" />
+            android:title="@string/color_codes_settings"
+            app:icon="@drawable/code_36dp" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="overwrite"
-            android:title="@string/overwrite_settings" />
+            android:title="@string/overwrite_settings"
+            app:icon="@drawable/overwrite_36dp" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="vibration"
-            android:title="@string/vibration_settings_title" />
+            android:title="@string/vibration_settings_title"
+            app:icon="@drawable/vibration_36dp" />
 
         <SeekBarPreference
             android:defaultValue="15"
             android:key="vibrationTime"
             android:max="300"
             android:title="@string/vibrationTime_settings_title"
+            app:dependency="vibration"
+            app:icon="@drawable/power_36dp"
             app:min="5"
             app:seekBarIncrement="5"
-            app:showSeekBarValue="true"
-            app:dependency="vibration"/>
+            app:showSeekBarValue="true" />
 
     </PreferenceCategory>
 
@@ -41,19 +47,32 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:icon="@drawable/send_settings_36dp"
             app:key="auto_send"
             app:title="@string/auto_send_settings" />
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
+            android:entries="@array/secondsShutdown"
+            android:entryValues="@array/secondsShutdown_values"
+            android:key="nColors"
+            android:summary="%s"
+            android:title="@string/shutdown_settings_title"
+            app:defaultValue="60"
+            app:icon="@drawable/timer_36dp" />
 
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/data_settings_header">
 
         <Preference
-            android:selectable="true"
             android:enabled="true"
             android:key="delete_all"
+            android:selectable="true"
+            android:summary="@string/delete_context_settings"
             android:title="@string/delete_all_colors_settings"
-            android:summary="@string/delete_context_settings" />
+            app:icon="@drawable/delete_36dp" />
 
     </PreferenceCategory>
 
