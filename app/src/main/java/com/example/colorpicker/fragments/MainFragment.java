@@ -650,6 +650,13 @@ public class MainFragment extends Fragment {
                                           boolean fromUser) {
                 gBrillo = progress;
                 chooseColorDialog(colorDialog, valuesDialog);
+
+                int millis = (int) (System.currentTimeMillis());
+
+                if (autoSend && (millis - lastMillis > interval)) {
+                    lastMillis = millis;
+                    sendColor();
+                }
             }
 
             @Override
@@ -673,6 +680,13 @@ public class MainFragment extends Fragment {
                                           boolean fromUser) {
                 bBrillo = progress;
                 chooseColorDialog(colorDialog, valuesDialog);
+
+                int millis = (int) (System.currentTimeMillis());
+
+                if (autoSend && (millis - lastMillis > interval)) {
+                    lastMillis = millis;
+                    sendColor();
+                }
             }
 
             @Override
