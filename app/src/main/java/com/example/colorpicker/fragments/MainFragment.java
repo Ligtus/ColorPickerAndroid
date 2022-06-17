@@ -358,13 +358,12 @@ public class MainFragment extends Fragment {
                     if (!hex.equals("#000000")) {
                         chooseColor(true);
                     }
-                }
+                    int millis = (int) (System.currentTimeMillis());
 
-                int millis = (int) (System.currentTimeMillis());
-
-                if (autoSend && (millis - lastMillis > interval)) {
-                    lastMillis = millis;
-                    sendColor();
+                    if (autoSend && (millis - lastMillis > interval)) {
+                        lastMillis = millis;
+                        sendColor();
+                    }
                 }
             }
 
@@ -621,6 +620,13 @@ public class MainFragment extends Fragment {
                                           boolean fromUser) {
                 rBrillo = progress;
                 chooseColorDialog(colorDialog, valuesDialog);
+
+                int millis = (int) (System.currentTimeMillis());
+
+                if (autoSend && (millis - lastMillis > interval)) {
+                    lastMillis = millis;
+                    sendColor();
+                }
             }
 
             @Override

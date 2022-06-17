@@ -76,7 +76,7 @@
             android:text="@string/add_lamp_cancel"
             android:textSize="@dimen/_10sdp"
             app:cornerRadius="@dimen/_10sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10ssp"
             android:backgroundTint="@color/buttonsColor"
             android:textColor="@color/textColor"/>
 
@@ -88,7 +88,7 @@
             android:textSize="@dimen/_10sdp"
             app:cornerRadius="@dimen/_10sdp"
             android:backgroundTint="@color/buttonsColor"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10ssp"
             android:textColor="@color/textColor"/>
     </LinearLayout>
 
