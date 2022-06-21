@@ -4,9 +4,11 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -27,6 +29,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         // Get delete_all preference
         Preference delete_all = findPreference("delete_all");
+        EditTextPreference nColors = findPreference("nColors");
+
+        // Set nColors to be numbers only
+        nColors.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+            @Override
+            public void onBindEditText(@NonNull EditText editText) {
+                editText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+            }
+        });
 
         // Set onPreferenceClickListener for delete_all preference
         delete_all.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
