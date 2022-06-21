@@ -1,61 +1,21 @@
 <resources>
-    <!-- Recientes preference -->
-    <string-array name="nRecientes">
-        <item>6 colores</item>
-        <item>12 colores</item>
-        <item>18 colores</item>
-        <item>24 colores</item>
-        <item>30 colores</item>
-        <item>36 colores</item>
-        <item>42 colores</item>
-        <item>48 colores</item>
-        <item>54 colores</item>
-        <item>60 colores</item>
-        <item>66 colores</item>
-        <item>72 colores</item>
-        <item>78 colores</item>
-        <item>84 colores</item>
-        <item>90 colores</item>
-        <item>96 colores</item>
-    </string-array>
-
-    <string-array name="nRecientes_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-    </string-array>
-
     <!-- Shutdown time preference -->
     <string-array name="secondsShutdown">
-        <item>No apagar</item>
-        <item>10 segundos</item>
-        <item>20 segundos</item>
-        <item>30 segundos</item>
-        <item>1 minuto</item>
-        <item>2 minutos</item>
-        <item>3 minutos</item>
-        <item>4 minutos</item>
-        <item>5 minutos</item>
-        <item>10 minutos</item>
-        <item>15 minutos</item>
-        <item>20 minutos</item>
-        <item>25 minutos</item>
-        <item>30 minutos</item>
-        <item>1 hora</item>
-        <item>2 horas</item>
+        <item>@string/option0</item>
+        <item>@string/option1</item>
+        <item>@string/option2</item>
+        <item>@string/option3</item>
+        <item>@string/option4</item>
+        <item>@string/option5</item>
+        <item>@string/option6</item>
+        <item>@string/option7</item>
+        <item>@string/option8</item>
+        <item>@string/option9</item>
+        <item>@string/option10</item>
+        <item>@string/option11</item>
+        <item>@string/option12</item>
+        <item>@string/option13</item>
+        <item>@string/option14</item>
     </string-array>
 
     <string-array name="secondsShutdown_values">
