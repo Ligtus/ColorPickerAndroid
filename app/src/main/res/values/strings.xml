@@ -1,10 +1,90 @@
 <resources>
-    <string name="app_name">ColorPicker</string>
+    <string name="app_name" translatable="false">ColorPicker</string>
     <string name="colorPanelText">Rueda de colores</string>
-    <string name="recientes"><u>Colores recientes</u></string>
-    <string name="brilloText"><u>Brillo</u></string>
-    <string name="brilloDefault">100</string>
-    <string name="confirm">Cambiar</string>
+    <string name="recientes">Colores recientes</string>
+    <string name="brilloText">Brillo</string>
+    <string name="brilloDefault" translatable="false">100</string>
     <string name="dialogText">Modificar color</string>
-    <string name="cargando">Cargando...</string>
+    <string name="confirm">Confirmar</string>
+    <string name="search_button">Buscar</string>
+
+    <!-- TOAST MESSAGES -->
+    <string name="color_deleted">Color borrado</string>
+    <string name="all_colors_deleted">Todos los colores borrados</string>
+    <string name="color_overwritten">Color sobreescrito</string>
+    <string name="color_sent">Color enviado</string>
+    <string name="color_editing">Editando color</string>
+    <string name="color_edited">Color guardado</string>
+    <string name="color_edit_canceled">Edición cancelada</string>
+
+    <!-- CONFIRM DIALOG -->
+    <string name="delete_color_title">Borrar color</string>
+    <string name="delete_color_message">¿Borrar este color?</string>
+    <string name="confirm_delete">Borrar</string>
+    <string name="cancel_delete">Cancelar</string>
+    <string name="overwrite_color_message">¿Sobreescribir este color?</string>
+    <string name="overwrite_color_title">Sobreescribir color</string>
+    <string name="confirm_overwrite">Sobreescribir</string>
+
+    <!-- ADD DIALOG -->
+    <string name="add_lamp_title">Añadir lámpara</string>
+    <string name="add_lamp_name">Nombre de la lámpara</string>
+    <string name="add_lamp_ip">Dirección IP de la lámpara</string>
+    <string name="add_lamp_hint_name">Lámpara de ejemplo</string>
+    <string name="add_lamp_hint_ip" translatable="false">123.123.123.123</string>
+    <string name="add_lamp_confirm">Añadir</string>
+    <string name="add_lamp_cancel">Cancelar</string>
+    <string name="add_lamp_canceled">Añadido cancelado</string>
+    <string name="add_lamp_added">Lámpara añadida</string>
+    <string name="add_lamp_already_exists">La lámpara ya existe</string>
+    <string name="add_lamp_error">Error al añadir la lámpara</string>
+
+    <!-- SETTINGS -->
+    <string name="recientes_settings_title">Número de filas de recientes</string>
+    <string name="colores_settings_header">Colores</string>
+    <string name="lampara_settings_header">Lámpara</string>
+    <string name="auto_send_settings">Enviar color automáticamente</string>
+    <string name="shutdown_settings_title">Tiempo de apagado automático</string>
+    <string name="vibration_settings_title">Vibración al pulsar color</string>
+    <string name="vibrationTime_settings_title">Intensidad de vibración (ms)</string>
+    <string name="color_codes_settings">Mostrar códigos de color</string>
+    <string name="overwrite_settings">Sobreescribir colores si no hay espacios libres</string>
+    <string name="data_settings_header">Datos</string>
+    <string name="delete_all_colors_settings">Borrar todos los colores</string>
+    <string name="delete_context_settings">Toca aquí para borrar todos los colores guardados</string>
+    <string name="delete_all_dialog_title">Borrar todos los colores</string>
+    <string name="delete_all_dialog_message">¿Estás seguro de que quieres borrar todos los colores?</string>
+
+    <!-- POPUP MENU -->
+    <string name="send_color">Enviar</string>
+    <string name="set_color">Ver</string>
+    <string name="edit_color">Editar</string>
+    <string name="popup_cancel_edit">Cancelar edición</string>
+    <string name="overwrite_color">Sobreescribir</string>
+    <string name="popup_insert">Guardar aquí</string>
+    <string name="delete_color">Borrar</string>
+
+    <!-- ERRORS -->
+    <string name="error_no_space">No hay espacio para guardar</string>
+    <string name="error_no_color">No hay color seleccionado</string>
+    <string name="error_already_saved">Color ya guardado</string>
+    <string name="error_ip_invalid">IP no válida</string>
+
+    <!-- ARRAY OPTIONS -->
+    <string name="option0">No apagar</string>
+    <string name="option1">10 segundos</string>
+    <string name="option2">20 segundos</string>
+    <string name="option3">30 segundos</string>
+    <string name="option4">1 minuto</string>
+    <string name="option5">2 minutos</string>
+    <string name="option6">3 minutos</string>
+    <string name="option7">4 minutos</string>
+    <string name="option8">5 minutos</string>
+    <string name="option9">10 minutos</string>
+    <string name="option10">15 minutos</string>
+    <string name="option11">20 minutos</string>
+    <string name="option12">30 minutos</string>
+    <string name="option13">1 hora</string>
+    <string name="option14">2 horas</string>
+
 </resources>

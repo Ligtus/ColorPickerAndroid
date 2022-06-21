@@ -14,4 +14,8 @@
     <color name="yellow">#FFFFFF00</color>
     <color name="pink">#FFFF00FF</color>
     <color name="nulo">#00000000</color>
+    <color name="settingsBackground">#EEEEEE</color>
+    <color name="appBackground">#FFFFFF</color>
+    <color name="textColor">#030303</color>
+    <color name="buttonsColor">#3333FF</color>
 </resources>

@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animationCache="false"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:weightSum="5">
+    android:padding="@dimen/_10sdp"
+    android:layout_margin="@dimen/_5sdp"
+    android:weightSum="6">
 
     <TextView
         android:id="@+id/textView"
@@ -19,10 +21,10 @@
     <SeekBar
         android:id="@+id/seekBar_0"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_weight="1"
         android:max="255"
-        android:min="0"
+        android:min="1"
         android:padding="0dp"
         android:progressTint="@color/red"
         android:thumbTint="@color/red" />
@@ -30,10 +32,10 @@
     <SeekBar
         android:id="@+id/seekBar_1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_weight="1"
         android:max="255"
-        android:min="0"
+        android:min="1"
         android:padding="0dp"
         android:progressTint="@color/green"
         android:thumbTint="@color/green" />
@@ -41,10 +43,10 @@
     <SeekBar
         android:id="@+id/seekBar_2"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_weight="1"
         android:max="255"
-        android:min="0"
+        android:min="1"
         android:padding="0dp"
         android:progressTint="@color/blue"
         android:thumbTint="@color/blue" />
@@ -59,16 +61,20 @@
     <View
         android:id="@+id/colorDialog"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginVertical="5dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
         android:layout_weight="1" />
 
     <Button
-        android:id="@+id/confirmDialog"
+        android:id="@+id/cancelDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+
         android:text="@string/confirm"
-        android:textSize="10sp" />
+        android:textSize="@dimen/_10ssp"
+        android:backgroundTint="@color/buttonsColor"
+        android:textColor="@color/textColor"
+        app:cornerRadius="@dimen/_10sdp"/>
 
 </LinearLayout>

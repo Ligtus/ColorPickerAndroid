@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Dialog">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="PopUpMenuCustom" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@drawable/dialog_background</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+</resources>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.MainFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/color"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_245sdp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/colorPanelText"
+            android:paddingTop="15dp"
+            android:paddingBottom="5dp"
+            app:srcCompat="@drawable/panelcolor" />
+
+        <TextView
+            android:id="@+id/recientes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/recientes"
+            android:textSize="@dimen/_18ssp"
+            android:textColor="@color/textColor"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recientesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_135sdp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/brilloText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="0"
+                android:gravity="center|end"
+                android:text="@string/brilloText"
+                android:textSize="@dimen/_16ssp"
+                android:textColor="@color/textColor"/>
+
+            <TextView
+                android:id="@+id/brilloValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="0"
+                android:gravity="center|start"
+                android:text="@string/brilloDefault"
+                android:textSize="@dimen/_16ssp"
+                android:textColor="@color/textColor"/>
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/brillo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:max="100"
+            android:min="1"
+            android:progress="100" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/muestra"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_weight="0"
+                android:backgroundTint="@color/settingsBackground"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:textAlignment="center"
+                android:textSize="@dimen/_11ssp"
+                app:cornerRadius="@dimen/_50sdp"
+                app:rippleColor="@color/nulo"
+                app:strokeColor="@color/nulo" />
+
+            <ImageButton
+                android:id="@+id/cambiarBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_weight="0"
+                android:background="@drawable/btn_background"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/save_36dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/colorDialogButton"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@color/nulo"
+        android:cropToPadding="false"
+        android:scaleType="center"
+        android:src="@drawable/tune_36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/btnExplosionLamps"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/btn_explosion_back"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/connectButton"
+        app:layout_constraintEnd_toEndOf="@id/connectButton"
+        app:layout_constraintStart_toStartOf="@+id/connectButton"
+        app:layout_constraintTop_toTopOf="@+id/connectButton" />
+
+    <View
+        android:id="@+id/btnExplosionSettings"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/btn_explosion_back"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/buttonSettings"
+        app:layout_constraintEnd_toEndOf="@id/buttonSettings"
+        app:layout_constraintStart_toStartOf="@+id/buttonSettings"
+        app:layout_constraintTop_toTopOf="@+id/buttonSettings" />
+
+    <ImageButton
+        android:id="@+id/connectButton"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@color/nulo"
+        android:cropToPadding="false"
+        android:scaleType="center"
+        android:src="@drawable/connect_36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/buttonSettings"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@color/nulo"
+        android:cropToPadding="false"
+        android:scaleType="center"
+        android:src="@drawable/settings_36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

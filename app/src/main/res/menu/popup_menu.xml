@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/popup_send"
+        android:icon="@drawable/send_popup_24dp"
+        android:title="@string/send_color" />
+
+    <item
+        android:id="@+id/popup_set"
+        android:icon="@drawable/eye_24dp"
+        android:title="@string/set_color" />
+
+    <item
+        android:id="@+id/popup_edit"
+        android:icon="@drawable/edit_24dp"
+        android:title="@string/edit_color" />
+
+    <item
+        android:id="@+id/popup_cancel_edit"
+        android:icon="@drawable/cancel_24dp"
+        android:title="@string/popup_cancel_edit"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/popup_overwrite"
+        android:icon="@drawable/overwrite_24dp"
+        android:title="@string/overwrite_color" />
+
+    <item
+        android:id="@+id/popup_insert"
+        android:icon="@drawable/save_24dp"
+        android:title="@string/popup_insert" />
+
+    <item
+        android:id="@+id/popup_delete"
+        android:icon="@drawable/delete_24dp"
+        android:title="@string/delete_color" />
+</menu>
