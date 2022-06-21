@@ -3,13 +3,11 @@
 
     <PreferenceCategory app:title="@string/colores_settings_header">
 
-        <ListPreference
+        <EditTextPreference
             android:defaultValue="2"
-            android:entries="@array/nRecientes"
-            android:entryValues="@array/nRecientes_values"
             android:key="nColors"
-            android:summary="%s"
             android:title="@string/recientes_settings_title"
+            app:useSimpleSummaryProvider="true"
             app:icon="@drawable/tag_36dp" />
 
         <SwitchPreference
@@ -53,10 +51,9 @@
         <ListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:defaultValue="false"
             android:entries="@array/secondsShutdown"
             android:entryValues="@array/secondsShutdown_values"
-            android:key="nColors"
+            android:key="secondsShutdown"
             android:summary="%s"
             android:title="@string/shutdown_settings_title"
             app:defaultValue="60"
