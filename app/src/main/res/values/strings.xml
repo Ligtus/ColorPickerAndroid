@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">ColorPicker</string>
+    <string name="app_name" translatable="false">ColorPicker</string>
     <string name="colorPanelText">Rueda de colores</string>
     <string name="recientes">Colores recientes</string>
     <string name="brilloText">Brillo</string>
-    <string name="brilloDefault">100</string>
+    <string name="brilloDefault" translatable="false">100</string>
     <string name="dialogText">Modificar color</string>
     <string name="confirm">Confirmar</string>
     <string name="search_button">Buscar</string>
@@ -31,7 +31,7 @@
     <string name="add_lamp_name">Nombre de la lámpara</string>
     <string name="add_lamp_ip">Dirección IP de la lámpara</string>
     <string name="add_lamp_hint_name">Lámpara de ejemplo</string>
-    <string name="add_lamp_hint_ip">123.123.123.123</string>
+    <string name="add_lamp_hint_ip" translatable="false">123.123.123.123</string>
     <string name="add_lamp_confirm">Añadir</string>
     <string name="add_lamp_cancel">Cancelar</string>
     <string name="add_lamp_canceled">Añadido cancelado</string>
@@ -40,7 +40,7 @@
     <string name="add_lamp_error">Error al añadir la lámpara</string>
 
     <!-- SETTINGS -->
-    <string name="recientes_settings_title">Número de colores recientes</string>
+    <string name="recientes_settings_title">Número de filas de recientes</string>
     <string name="colores_settings_header">Colores</string>
     <string name="lampara_settings_header">Lámpara</string>
     <string name="auto_send_settings">Enviar color automáticamente</string>
@@ -69,4 +69,22 @@
     <string name="error_no_color">No hay color seleccionado</string>
     <string name="error_already_saved">Color ya guardado</string>
     <string name="error_ip_invalid">IP no válida</string>
+
+    <!-- ARRAY OPTIONS -->
+    <string name="option0">No apagar</string>
+    <string name="option1">10 segundos</string>
+    <string name="option2">20 segundos</string>
+    <string name="option3">30 segundos</string>
+    <string name="option4">1 minuto</string>
+    <string name="option5">2 minutos</string>
+    <string name="option6">3 minutos</string>
+    <string name="option7">4 minutos</string>
+    <string name="option8">5 minutos</string>
+    <string name="option9">10 minutos</string>
+    <string name="option10">15 minutos</string>
+    <string name="option11">20 minutos</string>
+    <string name="option12">30 minutos</string>
+    <string name="option13">1 hora</string>
+    <string name="option14">2 horas</string>
+
 </resources>
