@@ -13,19 +13,22 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="showCodes"
-            android:title="@string/color_codes_settings"
+            android:title="@string/color_codes_settings_title"
+            android:summary="@string/color_codes_settings"
             app:icon="@drawable/code_36dp" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="overwrite"
-            android:title="@string/overwrite_settings"
+            android:title="@string/overwrite_settings_title"
+            android:summary="@string/overwrite_settings"
             app:icon="@drawable/overwrite_36dp" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="vibration"
             android:title="@string/vibration_settings_title"
+            android:summary="@string/vibration_settings"
             app:icon="@drawable/vibration_36dp" />
 
         <SeekBarPreference
@@ -44,10 +47,11 @@
     <PreferenceCategory app:title="@string/lampara_settings_header">
 
         <SwitchPreferenceCompat
-            app:defaultValue="true"
-            app:icon="@drawable/send_settings_36dp"
-            app:key="auto_send"
-            app:title="@string/auto_send_settings" />
+            android:defaultValue="true"
+            android:icon="@drawable/send_settings_36dp"
+            android:key="auto_send"
+            android:title="@string/auto_send_settings_title"
+            android:summary="@string/auto_send_settings" />
         <ListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
